@@ -3,11 +3,11 @@
 #include "../include/fallingBlock.h"
 
 void update(){
-
+    fallingBlock();
 }
 
 int main(){
     printf("%s", "ok");
-    update();
+    while(1) update();
     return 0;
 }
