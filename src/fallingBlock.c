@@ -1,8 +1,16 @@
 #include <stdio.h>
-#include <conio.h>
-#include <dos.h> // delay()
+#include <ncurses.h> 
 #include <string.h>
 
 void fallingBlock(){
-
+    switch(getch()){
+        case 'A':
+            //left
+            break;
+        case 'D':
+            //right
+            break;
+        case 'W':
+            //rotation
+        }
 }
