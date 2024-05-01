@@ -18,7 +18,9 @@ void update(){
 	printf("weszlo\n");
 	move_down();
     print_plansza();
-	alarm(2);
+	if(getchar() == 'a') move_left();
+	
+	alarm(1);
 }
 
 int main(){
@@ -27,20 +29,21 @@ int main(){
 	for(i = 0; i < 8; i++){
 		for(j = 0; j < 16; j++) plansza[i][j] = 0; //zerowanie na poczatku
 	}
-	// while (1) update(plansza);
+
 	printf("Press key \"P\" to start\n");
 	char start = getchar();
 	add_block_1x1();
 	print_plansza();
 	signal(SIGALRM, update);
-	alarm(2);
-	if(start = 'P'){ while(1){
+	alarm(1);
+	if(start = 'P'){ //można potem dac enter czy cos
+		while(1){
 
 		//initscr();
 		//refresh();
 		//print_plansza();
 		//action_code_for_falling_block = 0;
-		pause();
+			pause();
 		//fallingBlock);
     	     // Initial timeout setting
 		// if(action_code_for_falling_block == 1){ // przesuniecie w lewo
@@ -53,13 +56,9 @@ int main(){
 		// 	//printf("rotation\n");
 		// 	;
 		// }
-		//alarm(0);
-		
-		//print_plansza();
 		//endwin();
 
-	}}
-	//printf("c to gowno");
-    //    pause();
+		}
+	}
     return 0;
 }
