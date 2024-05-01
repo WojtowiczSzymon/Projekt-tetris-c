@@ -7,11 +7,57 @@
 #include <unistd.h>
 #include<ctype.h>
 
- extern int action_code_for_falling_block;
+extern int action_code_for_falling_block;
+extern int posx1;
+extern int posy1;
+extern int plansza[8][16];
+
+void print_plansza(){
+    system("clear");
+    for(int i=0;i<16;i++){
+        for(int j=0;j<8;j++){
+            printf("%d ",plansza[j][i]);
+        }
+        putchar('\n');
+        fflush(stdout);
+    }
+}
+void add_block_1x1(){
+    for(int i=0;i<8;i++){
+        if(plansza[i][0]==1){
+            printf("przegrana");
+            exit(0);
+        }
+    }
+    posx1=4;
+    posy1=0;
+    plansza[posx1][posy1]=1;
+}
+void move_right(){
+    if(posx1<7 && plansza[posx1+1][posy1]==0){
+        plansza[posx1][posy1]=0;
+        plansza[posx1+1][posy1]=1;
+        posx1++;
+    }
+}
+void move_left(){
+    if(posx1>0 && plansza[posx1-1][posy1]==0){
+        plansza[posx1][posy1]=0;
+        plansza[posx1-1][posy1]=1;
+        posx1--;
+    }
+}
+void move_down(){
+    if(posy1<15 && plansza[posx1][posy1+1]==0){
+        plansza[posx1][posy1]=0;
+        plansza[posx1][posy1+1]=1;
+        posy1++;
+    }
+}
 
 void fallingBlock(){
-    printf("weszlo\n");
-    clock_t start=clock();
+    //printf("weszlo\n");
+    alarm(5);
     char choice = 'K';  
     
     switch(tolower(getchar())){
@@ -28,9 +74,9 @@ void fallingBlock(){
             break;
             //rotation
     }
-    printf("wyszlo\n");
+    //printf("wyszlo\n");
+    //alarm(0);    
+    //signal(SIGALRM, fallingBlock);
     return;
-    // alarm(10);    
-    // signal(SIGALRM, fallingBlock);
 
 }
