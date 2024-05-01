@@ -15,9 +15,10 @@ int plansza[8][16];
 void update();
 
 void update(){
-	alarm(5);
+	printf("weszlo\n");
 	move_down();
     print_plansza();
+	alarm(2);
 }
 
 int main(){
@@ -30,15 +31,17 @@ int main(){
 	printf("Press key \"P\" to start\n");
 	char start = getchar();
 	add_block_1x1();
+	print_plansza();
+	signal(SIGALRM, update);
+	alarm(2);
 	if(start = 'P'){ while(1){
 
 		//initscr();
 		//refresh();
-		print_plansza();
+		//print_plansza();
 		//action_code_for_falling_block = 0;
-		fallingBlock(); 
-		alarm(5);
-		signal(SIGALRM, update);//fallingBlock);
+		pause();
+		//fallingBlock);
     	     // Initial timeout setting
 		// if(action_code_for_falling_block == 1){ // przesuniecie w lewo
 		// 	//printf("lewo");
