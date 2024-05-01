@@ -12,6 +12,7 @@
 #include <stdio.h>
 
 #include "../include/operations.h"
+#include "../include/board.h"
 
 int action_code_for_falling_block = 0;
 int posx1;
@@ -29,18 +30,11 @@ void update(){
 
 int main(){
 	//set window
-	sfVideoMode mode = {6 * SQUARE_SIZE, 6 * SQUARE_SIZE, 32}; //git rozmiar
+	sfVideoMode mode = {4 * SQUARE_SIZE, 6 * SQUARE_SIZE, 32}; //git rozmiar
 	sfRenderWindow *window = sfRenderWindow_create(mode, "Tetris", sfResize | sfClose, NULL);
-	sfVector2i vf = {200,100};
+	sfVector2i vf = {400,100};
 	sfRenderWindow_setPosition(window,vf);
 	sfRenderWindow_setFramerateLimit(window, 30);
-
-
-	// sfRectangleShape *shape = sfRectangleShape_create();
-   	// sfVector2f vf = {200, 200}, pos = {30, 30};
-   	// sfRectangleShape_setSize(shape, vf);
-   	// sfRectangleShape_setFillColor(shape, sfGreen);
-   	// sfRectangleShape_setPosition(shape, pos);
 
    	while (sfRenderWindow_isOpen(window)) {
      	sfEvent event;
@@ -51,53 +45,16 @@ int main(){
      	}
 
     	sfRenderWindow_clear(window, sfBlack);
-    //  sfRenderWindow_drawRectangleShape(window, shape, NULL);
+		//render spirits and shapes
+		drawBoard(window);
+
      	sfRenderWindow_display(window);
-   }
-
-//    sfRectangleShape_destroy(shape);
-   sfRenderWindow_destroy(window);
+	}
 
 
+    //clear everything
+    sfRenderWindow_destroy(window);
+	//sfRectangleShape_destroy();
 
-
-
-	// int i,j;
-    // printf("%s", "ok\n");
-	// for(i = 0; i < 8; i++){
-	// 	for(j = 0; j < 16; j++) plansza[i][j] = 0; //zerowanie na poczatku
-	// }
-
-	// printf("Press key \"P\" to start\n");
-	// char start = getchar();
-	// add_block_1x1();
-	// print_plansza();
-	// signal(SIGALRM, update);
-	// alarm(1);
-	// if(start = 'P'){ //można potem dac enter czy cos
-	// 	while(1){
-	// 		pause();
-	// 	}
-	// }
-
-
-	// 	//initscr();
-	// 	//refresh();
-	// 	//print_plansza();
-	// 	//action_code_for_falling_block = 0;
-	// 		pause();
-	// 	//fallingBlock);
-    // 	     // Initial timeout setting
-	// 	// if(action_code_for_falling_block == 1){ // przesuniecie w lewo
-	// 	// 	//printf("lewo");
-	// 	// 	move_left();
-	// 	// }else if(action_code_for_falling_block == 2){
-	// 	// 	//printf("prawo");
-	// 	// 	move_right();
-	// 	// }else if(action_code_for_falling_block == 3){
-	// 	// 	//printf("rotation\n");
-	// 	// 	;
-	// 	// }
-	// 	//endwin();
     return 0;
 }
