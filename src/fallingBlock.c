@@ -57,8 +57,8 @@ void move_down(){
 
 void fallingBlock(){
     //printf("weszlo\n");
-    alarm(5);
-    char choice = 'K';  
+    //alarm(5);
+    //char choice = 'K';  
     
     switch(tolower(getchar())){
         case 'a':
