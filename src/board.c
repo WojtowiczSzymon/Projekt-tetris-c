@@ -12,13 +12,20 @@ sfRectangleShape *defineSquare(sfVector2f position, sfVector2f size){
     return square;    
 }
 
-void drawBoard(sfRenderWindow *window){// board[8]){
+void defineBoard(sfRectangleShape *background[12][18]){
     for(int i = 0; i < 12; i++){
         for(int j = 0; j < 18; j++){
             sfVector2f position = {i * 128/2.5, j * 128/2.5}; 
             sfVector2f size = {128, 128}; //128-square size
-            sfRectangleShape *square = defineSquare(position, size);
-            sfRenderWindow_drawRectangleShape(window, square, NULL);
+            background[i][j] = defineSquare(position, size);
+        }
+    }
+}
+
+void drawBoard(sfRenderWindow *window, sfRectangleShape *background[12][18]){
+    for(int i = 0; i < 12; i++){
+        for(int j = 0; j < 18; j++){
+            sfRenderWindow_drawRectangleShape(window, background[i][j], NULL);
         }
     }
 }

@@ -36,6 +36,9 @@ int main(){
 	sfRenderWindow_setPosition(window,vf);
 	sfRenderWindow_setFramerateLimit(window, 30);
 
+	sfRectangleShape *background[12][18];
+	defineBoard(background);
+
    	while (sfRenderWindow_isOpen(window)) {
      	sfEvent event;
      	while (sfRenderWindow_pollEvent(window, &event)) {
@@ -46,13 +49,18 @@ int main(){
 
     	sfRenderWindow_clear(window, sfBlack);
 		//render spirits and shapes
-		drawBoard(window);
+		drawBoard(window, background);
 
      	sfRenderWindow_display(window);
 	}
 
 
     //clear everything
+	for(int i = 0; i < 12; i++){
+		for(int j = 0; j < 18; j++){
+			sfRectangleShape_destroy(background[i][j]);
+		}
+	}
     sfRenderWindow_destroy(window);
 	//sfRectangleShape_destroy();
 
