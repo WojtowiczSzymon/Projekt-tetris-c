@@ -5,10 +5,8 @@ void move_right();
 
 void move_left();
 
-void move_down();
-
-void print_plansza();
+void move_down(sfRenderWindow *window, sfRectangleShape *name, sfRectangleShape *background[10][15]);
 
 void add_block_1x1();
 
-void set_sprite_to_position(sfRectangleShape *name);
+void spriteMove(sfRectangleShape *name);

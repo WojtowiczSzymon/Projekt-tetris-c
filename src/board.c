@@ -30,4 +30,8 @@ void drawBoard(sfRenderWindow *window, sfRectangleShape *background[10][15]){
     }
 }
 
-//wymyslic usuwanie do tego, moze rzeczywiscie zrobic squares
+
+void changeBoard(sfRectangleShape *name, int posx, int posy, sfRectangleShape *background[10][15]){
+    sfColor color = sfRectangleShape_getFillColor(name);
+    sfRectangleShape_setFillColor(background[posx][posy], color);
+}

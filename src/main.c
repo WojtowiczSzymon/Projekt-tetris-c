@@ -16,8 +16,8 @@
 #include "../include/board.h"
 
 int action_code_for_falling_block = 0;
-int posx1;
-int posy1; 
+int posx1 = 5;
+int posy1 = 0; 
 int plansza[10][15];
 
 #define SQUARE_SIZE 128
@@ -34,7 +34,7 @@ int main(){
 	defineBoard(background);
 
 	sfRectangleShape *test = sfRectangleShape_create();
-	sfVector2f pos = {2 * 128/2.5, 0 * 128.2/5}; //128.2/5 - square_size2
+	sfVector2f pos = {posx1 * 128/2.5, posy1 * 128.2/5}; //128.2/5 - square_size2
 	sfVector2f size = {128/2.5, 128/2.5};
 	sfRectangleShape_setPosition(test, pos);
     sfRectangleShape_setSize(test, size);
@@ -42,7 +42,6 @@ int main(){
     sfRectangleShape_setOutlineThickness(test, 1);
     sfRectangleShape_setOutlineColor(test, sfColor_fromRGB(135,5,5));
 
-	//sfClock *clock();
  	struct timeval time_start;
     long long start_czas, end_czas;
 
@@ -54,8 +53,6 @@ int main(){
        		}
      	}
     	sfRenderWindow_clear(window, sfBlack);
-		//sfTime start_czas = sfClock_getElapsedTime(clock);
-		//sfTime end_czas = sfClock_getElapsedTime(clock);
 
 		//render spirits and shapes
 		drawBoard(window, background);
@@ -64,9 +61,9 @@ int main(){
 
         start_czas = time_start.tv_sec;
         end_czas = time_start.tv_sec;
-        while(end_czas - start_czas < 1.0){
+        while(end_czas - start_czas < 0.5){
         if(sfKeyboard_isKeyPressed(sfKeyLeft)){
-            move_left();
+            move_left(test);
 			printf("left\n");
             break;
         }
@@ -80,12 +77,11 @@ int main(){
             end_czas = time_start.tv_sec;
         //printf("sus");
         }
-		move_down();
+		move_down(window, test, background);
         printf("amogus\n");
+		spriteMove(test);
 		sleep(1.0-end_czas+start_czas);
 
-
-		set_sprite_to_position(test);
 
 
 		//spadanie i ify na poruszanie sie
