@@ -23,7 +23,7 @@ int main(){
 	sfRectangleShape *background[10][15]; 
 	defineBoard(background);
 	sfSprite *shapes[4];
-	defineSprites(shapes);
+	defineSprites(shapes); //zrobic structa na sprigte'y ze to sa cztery rectangles i masz ich pozycje
 
 	sfRectangleShape *test = sfRectangleShape_create();
 	sfVector2f pos = {posx1 * SQUARE_SIZE, posy1 * SQUARE_SIZE}; //128.2/5 - square_size2
@@ -72,7 +72,9 @@ int main(){
 		spriteMove(test);
 		sleep(1.0-end_czas+start_czas);
 
-		sfRenderWindow_drawRectangleShape(window, test, NULL);
+		//drawPiece();
+		//sfRenderWindow_drawSprite(window, shapes[rand() % 4], NULL);
+		//sfRenderWindow_drawRectangleShape(window, test, NULL);
      	sfRenderWindow_display(window);
 	}
 

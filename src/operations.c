@@ -33,7 +33,7 @@ void add_block_2x2(){
 }
 
 void move_right(){
-    if(posx1 < 9 && plansza[posx1+1][posy1] == 0){
+    if(posx1 < 9 && (plansza[posx1+1][posy1] == 0)){
         plansza[posx1][posy1]=0;
         plansza[posx1+1][posy1]=1;
         posx1++;
@@ -41,8 +41,8 @@ void move_right(){
 }
 void move_left(){
     if(posx1 > 0 && plansza[posx1-1][posy1] == 0){
-        plansza[posx1][posy1]=0;
-        plansza[posx1-1][posy1]=1;
+        plansza[posx1][posy1] = 0;
+        plansza[posx1-1][posy1] = 1;
         posx1--;
     }
 }
