@@ -1,14 +1,4 @@
-#include <string.h>
-#include <signal.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include<ctype.h>
-
-#include <SFML/Graphics.h>
-#include <SFML/Window.h>
-#include <stdio.h>
-
-#include "../include/board.h"
+#include "../include/define_include.h"
 
 extern int action_code_for_falling_block;
 extern int posx1;
@@ -56,25 +46,4 @@ void spriteMove(sfRectangleShape *name){ //zmienic na sprite'a
     sfVector2f old_pos = sfRectangleShape_getPosition(name);
     sfVector2f new_pos = {posx1*128/2.5, posy1*128/2.5}; 
     sfRectangleShape_setPosition(name, new_pos);
-}
-
-void fallingBlock(){
-    
-    switch(tolower(getchar())){
-        case 'a':
-        //left
-            action_code_for_falling_block=1;
-            break;
-        case 'd':
-            //right
-            action_code_for_falling_block=2;
-            break;
-        case 'w':
-            action_code_for_falling_block=3;
-            break;
-            //rotation
-    }
-    
-    return;
-
 }

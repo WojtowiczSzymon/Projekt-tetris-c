@@ -1,30 +1,13 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <signal.h>
-//#include <ncurses.h> 
-#include <stdlib.h>
-#include <ctype.h>
-#include <sys/time.h>
-
-
-
-#include <SFML/Graphics.h>
-#include <SFML/Window.h>
-#include <stdio.h>
-
-#include "../include/operations.h"
-#include "../include/board.h"
+#include "../include/define_include.h"
 
 int action_code_for_falling_block = 0;
 int posx1 = 5;
 int posy1 = 0; 
 int plansza[10][15];
 
-#define SQUARE_SIZE 128
-
 int main(){
 	//set window
-	sfVideoMode mode = {4 * SQUARE_SIZE, 6 * SQUARE_SIZE, 32}; //git rozmiar
+	sfVideoMode mode = {4 * SQUARE_SIZE*2.5, 6 * SQUARE_SIZE*2.5, 32}; //git rozmiar
 	sfRenderWindow *window = sfRenderWindow_create(mode, "Tetris", sfResize | sfClose, NULL);
 	sfVector2i vf = {400,100};
 	sfRenderWindow_setPosition(window,vf);
@@ -34,8 +17,8 @@ int main(){
 	defineBoard(background);
 
 	sfRectangleShape *test = sfRectangleShape_create();
-	sfVector2f pos = {posx1 * 128/2.5, posy1 * 128.2/5}; //128.2/5 - square_size2
-	sfVector2f size = {128/2.5, 128/2.5};
+	sfVector2f pos = {posx1 * SQUARE_SIZE, posy1 * SQUARE_SIZE}; //128.2/5 - square_size2
+	sfVector2f size = {SQUARE_SIZE, SQUARE_SIZE};
 	sfRectangleShape_setPosition(test, pos);
     sfRectangleShape_setSize(test, size);
     sfRectangleShape_setFillColor(test, sfColor_fromRGB(200,0,0));
@@ -82,11 +65,6 @@ int main(){
 		spriteMove(test);
 		sleep(1.0-end_czas+start_czas);
 
-
-
-		//spadanie i ify na poruszanie sie
-
-		//drawPieces(window, pieces);
 		sfRenderWindow_drawRectangleShape(window, test, NULL);
      	sfRenderWindow_display(window);
 	}

@@ -1,5 +1,4 @@
-#include <SFML/Graphics.h>
-#include <SFML/Window.h>
+#include "../include/define_include.h"
 
 sfRectangleShape *defineSquare(sfVector2f position, sfVector2f size){
     sfRectangleShape *square = sfRectangleShape_create();
@@ -15,8 +14,8 @@ sfRectangleShape *defineSquare(sfVector2f position, sfVector2f size){
 void defineBoard(sfRectangleShape *background[10][15]){
     for(int i = 0; i < 10; i++){
         for(int j = 0; j < 15; j++){
-            sfVector2f position = {i * 128/2.5, j * 128/2.5}; 
-            sfVector2f size = {128/2.5, 128/2.5}; //128-square size
+            sfVector2f position = {i * SQUARE_SIZE, j * SQUARE_SIZE}; 
+            sfVector2f size = {SQUARE_SIZE, SQUARE_SIZE}; //128-square size
             background[i][j] = defineSquare(position, size);
         }
     }
@@ -29,7 +28,6 @@ void drawBoard(sfRenderWindow *window, sfRectangleShape *background[10][15]){
         }
     }
 }
-
 
 void changeBoard(sfRectangleShape *name, int posx, int posy, sfRectangleShape *background[10][15]){
     sfColor color = sfRectangleShape_getFillColor(name);

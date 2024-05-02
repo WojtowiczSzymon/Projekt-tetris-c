@@ -1,6 +1,4 @@
  
-void fallingBlock();
-
 void move_right();
 
 void move_left();
