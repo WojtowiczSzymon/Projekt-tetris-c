@@ -1,4 +1,5 @@
- 
+#include "define_include.h"
+
 void move_right();
 
 void move_left();

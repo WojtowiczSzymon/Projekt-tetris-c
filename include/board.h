@@ -1,5 +1,4 @@
-#include <SFML/Graphics.h>
-#include <SFML/Window.h>
+#include "define_include.h"
 
 void defineBoard(sfRectangleShape *background[10][15]);
 

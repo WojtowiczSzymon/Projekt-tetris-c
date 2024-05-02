@@ -1,11 +1,18 @@
 #include "../include/define_include.h"
 
+#include "../include/operations.h"
+#include "../include/board.h"
+#include "../include/sprites.h"
+
 int action_code_for_falling_block = 0;
-int posx1 = 5;
-int posy1 = 0; 
+int posx1, posy1, posx2, posy2, posy2, posx3, posy3, posx4, posy4;
 int plansza[10][15];
 
 int main(){
+	for(int i = 0; i < 10; i++){
+		for(int j = 0; j < 15; j++) plansza[i][j] = 0;
+	}
+
 	//set window
 	sfVideoMode mode = {4 * SQUARE_SIZE*2.5, 6 * SQUARE_SIZE*2.5, 32}; //git rozmiar
 	sfRenderWindow *window = sfRenderWindow_create(mode, "Tetris", sfResize | sfClose, NULL);
@@ -15,6 +22,8 @@ int main(){
 
 	sfRectangleShape *background[10][15]; 
 	defineBoard(background);
+	sfSprite *shapes[4];
+	defineSprites(shapes);
 
 	sfRectangleShape *test = sfRectangleShape_create();
 	sfVector2f pos = {posx1 * SQUARE_SIZE, posy1 * SQUARE_SIZE}; //128.2/5 - square_size2
@@ -37,7 +46,7 @@ int main(){
      	}
     	sfRenderWindow_clear(window, sfBlack);
 
-		//render spirits and shapes
+		//render sprites and shapes
 		drawBoard(window, background);
 
 		gettimeofday(&time_start,NULL);
@@ -55,10 +64,8 @@ int main(){
 			printf("right\n");
             break;
         }
-            //end_czas = sfClock_getElapsedTime(clock);
             gettimeofday(&time_start,NULL);
             end_czas = time_start.tv_sec;
-        //printf("sus");
         }
 		move_down(window, test, background);
         printf("amogus\n");
@@ -74,6 +81,9 @@ int main(){
 		for(int j = 0; j < 15; j++){
 			sfRectangleShape_destroy(background[i][j]);
 		}
+	}
+	for(int i = 0; i < 4; i++){
+		sfSprite_destroy(shapes[i]);
 	}
 	sfRectangleShape_destroy(test);
     sfRenderWindow_destroy(window);
