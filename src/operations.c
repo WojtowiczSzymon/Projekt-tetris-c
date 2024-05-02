@@ -12,16 +12,6 @@ extern int posx1;
 extern int posy1;
 extern int plansza[8][16];
 
-void print_plansza(){
-    system("clear");
-    for(int i=0;i<16;i++){
-        for(int j=0;j<8;j++){
-            printf("%d ",plansza[j][i]);
-        }
-        putchar('\n');
-        fflush(stdout);
-    }
-}
 void add_block_1x1(){
     for(int i=0;i<8;i++){
         if(plansza[i][0]==1){
@@ -56,9 +46,6 @@ void move_down(){
 }
 
 void fallingBlock(){
-    //printf("weszlo\n");
-    //alarm(5);
-    //char choice = 'K';  
     
     switch(tolower(getchar())){
         case 'a':
@@ -74,9 +61,7 @@ void fallingBlock(){
             break;
             //rotation
     }
-    //printf("wyszlo\n");
-    //alarm(0);    
-    //signal(SIGALRM, fallingBlock);
+    
     return;
 
 }

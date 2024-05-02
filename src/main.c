@@ -4,6 +4,7 @@
 //#include <ncurses.h> 
 #include <stdlib.h>
 #include <ctype.h>
+#include <sys/time.h>
 
 
 
@@ -17,15 +18,8 @@
 int action_code_for_falling_block = 0;
 int posx1;
 int posy1; 
-int plansza[8][16];
+int plansza[10][15];
 
-void update();
-
-void update(){
-	move_down();
-    print_plansza();
-	alarm(1);
-}
 #define SQUARE_SIZE 128
 
 int main(){
@@ -36,33 +30,74 @@ int main(){
 	sfRenderWindow_setPosition(window,vf);
 	sfRenderWindow_setFramerateLimit(window, 30);
 
-	sfRectangleShape *background[12][18];
+	sfRectangleShape *background[10][15]; 
 	defineBoard(background);
 
-   	while (sfRenderWindow_isOpen(window)) {
+	sfRectangleShape *test = sfRectangleShape_create();
+	sfVector2f pos = {2 * 128/2.5, 0 * 128.2/5};
+	sfVector2f size = {128/2.5, 128/2.5};
+	sfRectangleShape_setPosition(test, pos);
+    sfRectangleShape_setSize(test, size);
+    sfRectangleShape_setFillColor(test, sfColor_fromRGB(200,0,0));
+    sfRectangleShape_setOutlineThickness(test, 1);
+    sfRectangleShape_setOutlineColor(test, sfColor_fromRGB(135,5,5));
+
+	//sfClock *clock();
+ 	struct timeval time_start;
+    long long start_czas, end_czas;
+
+   	while(sfRenderWindow_isOpen(window)){
      	sfEvent event;
-     	while (sfRenderWindow_pollEvent(window, &event)) {
-       		if (event.type == sfEvtClosed) {
+     	while(sfRenderWindow_pollEvent(window, &event)){
+       		if(event.type == sfEvtClosed){
         		sfRenderWindow_close(window);
        		}
      	}
-
     	sfRenderWindow_clear(window, sfBlack);
+		//sfTime start_czas = sfClock_getElapsedTime(clock);
+		//sfTime end_czas = sfClock_getElapsedTime(clock);
+
 		//render spirits and shapes
 		drawBoard(window, background);
 
+		gettimeofday(&time_start,NULL);
+
+        start_czas = time_start.tv_sec;
+        end_czas = time_start.tv_sec;
+        while(end_czas - start_czas < 1.0){
+        if(sfKeyboard_isKeyPressed(sfKeyLeft)){
+            move_left();
+			printf("left\n");
+            break;
+        }
+        if(sfKeyboard_isKeyPressed(sfKeyRight)){
+            move_right();
+            break;
+        }
+            //end_czas = sfClock_getElapsedTime(clock);
+            gettimeofday(&time_start,NULL);
+            end_czas = time_start.tv_sec;
+        //printf("sus");
+        }
+		move_down();
+        printf("amogus\n");
+		sleep(1.0-end_czas+start_czas);
+
+		//spadanie i ify na poruszanie sie
+
+		//drawPieces(window, pieces);
+		sfRenderWindow_drawRectangleShape(window, test, NULL);
      	sfRenderWindow_display(window);
 	}
 
-
     //clear everything
-	for(int i = 0; i < 12; i++){
-		for(int j = 0; j < 18; j++){
+	for(int i = 0; i < 10; i++){
+		for(int j = 0; j < 15; j++){
 			sfRectangleShape_destroy(background[i][j]);
 		}
 	}
+	sfRectangleShape_destroy(test);
     sfRenderWindow_destroy(window);
-	//sfRectangleShape_destroy();
 
     return 0;
 }
