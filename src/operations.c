@@ -1,11 +1,13 @@
-#include <stdio.h>
-#include <ncurses.h> 
-#include <time.h>
 #include <string.h>
 #include <signal.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include<ctype.h>
+
+#include <SFML/Graphics.h>
+#include <SFML/Window.h>
+
+#include <stdio.h>
 
 extern int action_code_for_falling_block;
 extern int posx1;
@@ -43,6 +45,13 @@ void move_down(){
         plansza[posx1][posy1+1]=1;
         posy1++;
     }
+}
+
+void set_sprite_to_position(sfRectangleShape *name){
+    sfVector2f old_pos = sfRectangleShape_getPosition(name);
+    sfVector2f new_pos = {old_pos.x, old_pos.y+128/2.5}; 
+    sfRectangleShape_setPosition(name, new_pos);
+    //sprite.x = posx1 sprite.y = posy1;
 }
 
 void fallingBlock(){

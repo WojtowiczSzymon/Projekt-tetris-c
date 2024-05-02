@@ -34,7 +34,7 @@ int main(){
 	defineBoard(background);
 
 	sfRectangleShape *test = sfRectangleShape_create();
-	sfVector2f pos = {2 * 128/2.5, 0 * 128.2/5};
+	sfVector2f pos = {2 * 128/2.5, 0 * 128.2/5}; //128.2/5 - square_size2
 	sfVector2f size = {128/2.5, 128/2.5};
 	sfRectangleShape_setPosition(test, pos);
     sfRectangleShape_setSize(test, size);
@@ -72,6 +72,7 @@ int main(){
         }
         if(sfKeyboard_isKeyPressed(sfKeyRight)){
             move_right();
+			printf("right\n");
             break;
         }
             //end_czas = sfClock_getElapsedTime(clock);
@@ -82,6 +83,10 @@ int main(){
 		move_down();
         printf("amogus\n");
 		sleep(1.0-end_czas+start_czas);
+
+
+		set_sprite_to_position(test);
+
 
 		//spadanie i ify na poruszanie sie
 
