@@ -61,6 +61,7 @@ int main(){
         }
 		if(sfKeyboard_isKeyPressed(sfKeyR)){
 			rotation(shapes); //typ = 3 = poziomy
+			spriteMove(shapes);
 			break;
 		}
             gettimeofday(&time_start,NULL);

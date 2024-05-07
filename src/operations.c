@@ -139,7 +139,7 @@ void move_down(sfRenderWindow *window, sfRectangleShape *shapes[4], sfRectangleS
                 plansza[points[0].x][points[0].y+1]=1;
                 points[0].y++;
             }else{
-                
+                printf("dlugas\n");
                 changeBoard(shapes, points, background); 
                 drawBoard(window, background);
                 add_block_2x2(shapes);
@@ -194,20 +194,22 @@ void rotation(sfRectangleShape *shapes[4]){
                 plansza[points[2].x][points[2].y] = 1;
                 plansza[points[3].x][points[3].y] = 1;
             }
-          break;
+            break;
         case 3:
-            if(points[0].x-1 >= 0 && points[2].x+1 <= 9 && points[3].x+2 <= 9 && plansza[points[0].x-1][points[0].y+1]==0 && plansza[points[2].x+1][points[2].y-1]==0 && plansza[points[3].x+2][points[3].y-2]==0){
-                type = 3;
+            printf("rot2\n");
+            if(points[0].y -1 >=0 && points[2].y+1 <= 14 && points[3].y+2 <= 14 && plansza[points[0].x+1][points[0].y-1]==0 && plansza[points[2].x-1][points[2].y+1]==0 && plansza[points[3].x-2][points[3].y+2]==0){
+                type = 2;
                 plansza[points[0].x][points[0].y] = 0;
                 plansza[points[2].x][points[2].y] = 0;
                 plansza[points[3].x][points[3].y] = 0;
-                points[0].x -= 1; points[0].y = points[1].y;
-                points[2].x += 1; points[2].y = points[1].y;
-                points[3].x += 2; points[3].y = points[1].y;
+                points[0].y -= 1; points[0].x = points[1].x;
+                points[2].y += 1; points[2].x = points[1].x;
+                points[3].y += 2; points[3].x = points[1].x;
                 plansza[points[0].x][points[0].y] = 1;
                 plansza[points[2].x][points[2].y] = 1;
                 plansza[points[3].x][points[3].y] = 1;
             }
+            break;
     }
 }
 
