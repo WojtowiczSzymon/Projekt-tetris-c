@@ -59,10 +59,14 @@ int main(){
 			spriteMove(shapes);
             break;
         }
+		if(sfKeyboard_isKeyPressed(sfKeyR)){
+			rotation(shapes); //typ = 3 = poziomy
+			break;
+		}
             gettimeofday(&time_start,NULL);
             end_czas = time_start.tv_sec;
         }
-		if(sfKeyboard_isKeyPressed())
+		
 		move_down(window, shapes, background);
 		spriteMove(shapes);
         //printf("amogus\n");

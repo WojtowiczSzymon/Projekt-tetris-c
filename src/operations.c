@@ -43,22 +43,22 @@ void lose(){
            }
            break;
         case 2:
-            if(points[1].x < 9 && points[3].x < 9  && plansza[points[1].x+1][points[1].y] == 0 && plansza[points[3].x+1][points[3].y] == 0 && points[0].x < 9 && points[2].x < 9  && plansza[points[0].x+1][points[0].y] == 0 && plansza[points[2].x+1][points[2].y] == 0){
-                plansza[points[1].x][points[1].y]=0;
-                plansza[points[1].x+1][points[1].y]=1;
-                points[1].x++;
-                plansza[points[3].x][points[3].y]=0;
-                plansza[points[3].x+1][points[3].y]=1;
-                points[3].x++;
+            if(points[0].x > 0 && points[2].x > 0  && plansza[points[0].x-1][points[0].y] == 0 && plansza[points[2].x-1][points[2].y] == 0 && points[1].x > 0 && points[3].x > 0  && plansza[points[1].x-1][points[1].y] == 0 && plansza[points[3].x-1][points[3].y] == 0){
                 plansza[points[0].x][points[0].y]=0;
                 plansza[points[0].x+1][points[0].y]=1;
                 points[0].x++;
+                plansza[points[1].x][points[1].y]=0;
+                plansza[points[1].x+1][points[1].y]=1;
+                points[1].x++;
                 plansza[points[2].x][points[2].y]=0;
                 plansza[points[2].x+1][points[2].y]=1;
                 points[2].x++;
-                
-           }
-           break;
+                plansza[points[3].x][points[3].y]=0;
+                plansza[points[3].x+1][points[3].y]=1;
+                points[3].x++;
+            }
+            break;
+            
  
     }
  }
@@ -81,20 +81,24 @@ void lose(){
             }
             break;
         case 2:
-            if(points[0].x > 0 && points[2].x > 0  && plansza[points[0].x-1][points[0].y] == 0 && plansza[points[2].x-1][points[2].y] == 0 && points[1].x > 0 && points[3].x > 0  && plansza[points[1].x-1][points[1].y] == 0 && plansza[points[3].x-1][points[3].y] == 0){
-                plansza[points[0].x][points[0].y]=0;
-                plansza[points[0].x-1][points[0].y]=1;
-                points[0].x--;
+            if(points[1].x < 9 && points[3].x < 9  && plansza[points[1].x+1][points[1].y] == 0 && plansza[points[3].x+1][points[3].y] == 0 && points[0].x < 9 && points[2].x < 9  && plansza[points[0].x+1][points[0].y] == 0 && plansza[points[2].x+1][points[2].y] == 0){
+                
+                plansza[points[3].x][points[3].y]=0;
+                plansza[points[3].x-1][points[3].y]=1;
+                points[3].x--;
                 plansza[points[2].x][points[2].y]=0;
                 plansza[points[2].x-1][points[2].y]=1;
                 points[2].x--;
                 plansza[points[1].x][points[1].y]=0;
                 plansza[points[1].x-1][points[1].y]=1;
                 points[1].x--;
-                plansza[points[3].x][points[3].y]=0;
-                plansza[points[3].x-1][points[3].y]=1;
-                points[3].x--;
-            }
+                plansza[points[0].x][points[0].y]=0;
+                plansza[points[0].x-1][points[0].y]=1;
+                points[0].x--;
+                
+                
+           }
+           break;
     }
  }
 void move_down(sfRenderWindow *window, sfRectangleShape *shapes[4], sfRectangleShape *background[10][15]){
@@ -141,6 +145,69 @@ void move_down(sfRenderWindow *window, sfRectangleShape *shapes[4], sfRectangleS
                 add_block_2x2(shapes);
             }
             break;
+        case 3:
+            if(points[0].y < 14 && plansza[points[0].x][points[0].y+1] == 0 && points[1].y < 14 && plansza[points[1].x][points[1].y+1] == 0 && points[2].y < 14 && plansza[points[2].x][points[2].y+1] == 0 && points[3].y < 14 && plansza[points[3].x][points[3].y+1] == 0){
+                plansza[points[3].x][points[3].y]=0;
+                plansza[points[3].x][points[3].y+1]=1;
+                points[3].y++;
+                plansza[points[2].x][points[2].y]=0;
+                plansza[points[2].x][points[2].y+1]=1;
+                points[2].y++;
+                plansza[points[1].x][points[1].y]=0;
+                plansza[points[1].x][points[1].y+1]=1;
+                points[1].y++;
+                plansza[points[0].x][points[0].y]=0;
+                plansza[points[0].x][points[0].y+1]=1;
+                points[0].y++;
+            }else{
+                changeBoard(shapes, points, background); 
+                drawBoard(window, background);
+                add_dlugas(shapes);
+            }
+
+    }
+}
+
+void rotation(sfRectangleShape *shapes[4]){
+    switch(type){
+        case 2:
+            /*
+                x 0 x x
+                x 1 x x
+                x 2 x x
+                x 3 x x
+
+                x x x x
+                0 1 2 3
+                x x x x
+                x x x x
+           */
+            if(points[0].x-1 >= 0 && points[2].x+1 <= 9 && points[3].x+2 <= 9 && plansza[points[0].x-1][points[0].y+1]==0 && plansza[points[2].x+1][points[2].y-1]==0 && plansza[points[3].x+2][points[3].y-2]==0){
+                type = 3;
+                plansza[points[0].x][points[0].y] = 0;
+                plansza[points[2].x][points[2].y] = 0;
+                plansza[points[3].x][points[3].y] = 0;
+                points[0].x -= 1; points[0].y = points[1].y;
+                points[2].x += 1; points[2].y = points[1].y;
+                points[3].x += 2; points[3].y = points[1].y;
+                plansza[points[0].x][points[0].y] = 1;
+                plansza[points[2].x][points[2].y] = 1;
+                plansza[points[3].x][points[3].y] = 1;
+            }
+          break;
+        case 3:
+            if(points[0].x-1 >= 0 && points[2].x+1 <= 9 && points[3].x+2 <= 9 && plansza[points[0].x-1][points[0].y+1]==0 && plansza[points[2].x+1][points[2].y-1]==0 && plansza[points[3].x+2][points[3].y-2]==0){
+                type = 3;
+                plansza[points[0].x][points[0].y] = 0;
+                plansza[points[2].x][points[2].y] = 0;
+                plansza[points[3].x][points[3].y] = 0;
+                points[0].x -= 1; points[0].y = points[1].y;
+                points[2].x += 1; points[2].y = points[1].y;
+                points[3].x += 2; points[3].y = points[1].y;
+                plansza[points[0].x][points[0].y] = 1;
+                plansza[points[2].x][points[2].y] = 1;
+                plansza[points[3].x][points[3].y] = 1;
+            }
     }
 }
 
