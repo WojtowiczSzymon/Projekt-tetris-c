@@ -5,8 +5,9 @@
 #include "../include/sprites.h"
 
 int action_code_for_falling_block = 0;
-int posx1, posy1, posx2, posy2, posy2, posx3, posy3, posx4, posy4;
+point points[4]; // points[0] górny, points[1] dolny, points[2] lewy, points[3] prawy.
 int plansza[10][15];
+int type = 1;
 
 int main(){
 	for(int i = 0; i < 10; i++){
@@ -22,17 +23,9 @@ int main(){
 
 	sfRectangleShape *background[10][15]; 
 	defineBoard(background);
-	sfSprite *shapes[4];
-	defineSprites(shapes); //zrobic structa na sprigte'y ze to sa cztery rectangles i masz ich pozycje
-
-	sfRectangleShape *test = sfRectangleShape_create();
-	sfVector2f pos = {posx1 * SQUARE_SIZE, posy1 * SQUARE_SIZE}; //128.2/5 - square_size2
-	sfVector2f size = {SQUARE_SIZE, SQUARE_SIZE};
-	sfRectangleShape_setPosition(test, pos);
-    sfRectangleShape_setSize(test, size);
-    sfRectangleShape_setFillColor(test, sfColor_fromRGB(200,0,0));
-    sfRectangleShape_setOutlineThickness(test, 1);
-    sfRectangleShape_setOutlineColor(test, sfColor_fromRGB(135,5,5));
+	sfRectangleShape *shapes[4]; //tablica czterech kwadratow, na ktore skalda sie ksztalt
+	defineSprites(shapes); 
+	add_block_2x2(shapes); //inicjowanie na poczatku 2x2
 
  	struct timeval time_start;
     long long start_czas, end_czas;
@@ -55,27 +48,38 @@ int main(){
         end_czas = time_start.tv_sec;
         while(end_czas - start_czas < 0.5){
         if(sfKeyboard_isKeyPressed(sfKeyLeft)){
-            move_left(test);
+            move_left(window, shapes, background);
 			printf("left\n");
+			spriteMove(shapes);
             break;
         }
         if(sfKeyboard_isKeyPressed(sfKeyRight)){
-            move_right();
+            move_right(window, shapes, background);
 			printf("right\n");
+			spriteMove(shapes);
             break;
         }
             gettimeofday(&time_start,NULL);
             end_czas = time_start.tv_sec;
         }
-		move_down(window, test, background);
-        printf("amogus\n");
-		spriteMove(test);
+		if(sfKeyboard_isKeyPressed())
+		move_down(window, shapes, background);
+		spriteMove(shapes);
+        //printf("amogus\n");
+		
 		sleep(1.0-end_czas+start_czas);
 
-		//drawPiece();
-		//sfRenderWindow_drawSprite(window, shapes[rand() % 4], NULL);
+		drawSprites(window, shapes);
 		//sfRenderWindow_drawRectangleShape(window, test, NULL);
      	sfRenderWindow_display(window);
+		printf("\n");
+		for(int i=0;i<15;i++){
+                    for(int j=0;j<10;j++){
+                        printf("%d ",plansza[j][i]);
+                    }
+                    printf("\n");
+                }
+
 	}
 
     //clear everything
@@ -85,9 +89,8 @@ int main(){
 		}
 	}
 	for(int i = 0; i < 4; i++){
-		sfSprite_destroy(shapes[i]);
+		sfRectangleShape_destroy(shapes[i]);
 	}
-	sfRectangleShape_destroy(test);
     sfRenderWindow_destroy(window);
 
     return 0;
