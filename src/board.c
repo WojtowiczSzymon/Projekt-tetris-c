@@ -38,3 +38,13 @@ void adjustBoard(int plansza[10][15], sfRectangleShape *background[10][15]){
         }
     }
 }
+
+void endBoard(sfRenderWindow *window, sfRectangleShape *background[10][15]){
+    for(int i = 0; i < 10; i++){
+        for(int j = 0; j < 15; j++){
+            sfRectangleShape_setFillColor(background[i][j], darkGray);
+            sfRectangleShape_setOutlineColor(background[i][j], sfBlack);
+        }
+    }
+    drawBoard(window, background);
+}

@@ -14,7 +14,7 @@
 #define Gray sfColor_fromRGB(43,51,100)
 #define darkRed sfColor_fromRGB(200,0,0)
 #define Red sfColor_fromRGB(135,5,5)
-#define darkGray sfColor_fromRGB(51,55,82)
+#define darkGray sfColor_fromRGB(32,35,53)
 
 struct point{
     int x;
@@ -27,5 +27,7 @@ sfRenderWindow *createWindow();
 sfRectangleShape *defineSquare(sfVector2f position, sfVector2f size, sfColor fillColor, sfColor outlineColor);
 
 sfText *createText(sfFont *font);
+
+void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font);
 
 #endif

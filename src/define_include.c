@@ -30,3 +30,20 @@ sfText *createText(sfFont *font){
 
     return textResults;
 }
+
+void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font){
+    for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 15; j++)
+		{
+			sfRectangleShape_destroy(background[i][j]);
+		}
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		sfRectangleShape_destroy(shapes[i]);
+	}
+	sfText_destroy(text_result);
+	sfFont_destroy(font);
+	sfRenderWindow_destroy(window);
+}

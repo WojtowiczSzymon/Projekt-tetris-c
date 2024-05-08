@@ -52,11 +52,12 @@ int main()
 
 		gettimeofday(&time_start, NULL);
 
-		start_czas = time_start.tv_sec;
-		end_czas = time_start.tv_sec;
-		while (end_czas - start_czas < 0.5)
+		if (win == 0)
 		{
-			
+			start_czas = time_start.tv_sec;
+			end_czas = time_start.tv_sec;
+			while (end_czas - start_czas < 0.5)
+			{
 				if (sfKeyboard_isKeyPressed(sfKeyLeft))
 				{
 					move_left(window, shapes, background);
@@ -71,48 +72,39 @@ int main()
 				}
 				if (sfKeyboard_isKeyPressed(sfKeyR))
 				{
-					rotation(shapes); 
+					rotation(shapes);
 					spriteMove(shapes);
 					break;
 				}
 				gettimeofday(&time_start, NULL);
 				end_czas = time_start.tv_sec;
-		}
+			}
 			move_down(window, shapes, background);
 			spriteMove(shapes);
 
 			sleep(1.0 - end_czas + start_czas);
 
 			drawSprites(window, shapes);
-			sfRenderWindow_display(window);
-			printf("\n");
-			for (int i = 0; i < 15; i++)
-			{
-				for (int j = 0; j < 10; j++)
-				{
-					printf("%d ", plansza[j][i]);
-				}
-				printf("\n");
-			}
 		}
-		
-	
-	
-
-	//clear everything
-	for (int i = 0; i < 10; i++)
-	{
-		for (int j = 0; j < 15; j++)
+		else{
+			endBoard(window, background);
+			if(sfKeyboard_isKeyPressed(sfKeyQ)){
+				deleteAll(window, background, shapes, text_result, font);
+				exit(0);
+			} //Q - quit
+		}
+		sfRenderWindow_display(window);
+		printf("\n");
+		for (int i = 0; i < 15; i++)
 		{
-			sfRectangleShape_destroy(background[i][j]);
+			for (int j = 0; j < 10; j++)
+			{
+				printf("%d ", plansza[j][i]);
+			}
+			printf("\n");
 		}
 	}
-	for (int i = 0; i < 4; i++)
-	{
-		sfRectangleShape_destroy(shapes[i]);
-	}
-	sfText_destroy(text_result);
-	sfFont_destroy(font);
-	sfRenderWindow_destroy(window);
+	// clear everything
+	deleteAll(window, background, shapes, text_result, font);
 	return 0;
 }

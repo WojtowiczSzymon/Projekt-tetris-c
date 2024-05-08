@@ -11,6 +11,6 @@ void changeBoard(sfRectangleShape *shapes[4], point points[4], sfRectangleShape 
 
 void adjustBoard(int plansza[10][15], sfRectangleShape *background[10][15]);
 
-void endBoard(sfRectangleShape *background[10][15]);
+void endBoard(sfRenderWindow *window, sfRectangleShape *background[10][15]);
 
 #endif

@@ -48,7 +48,7 @@ void deleteRow(sfRectangleShape *background[10][15], sfRenderWindow *window){
 
 void addRandomBlock(sfRectangleShape *shapes[4], sfRectangleShape *background[10][15],sfRenderWindow *window){
     deleteRow(background,window);
-    //lost();
+    lost();
     int randomType = rand()%2+1;
     switch(randomType){
         case 1:
