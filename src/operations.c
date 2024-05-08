@@ -7,6 +7,7 @@ extern int plansza[10][15];
 extern point points[4];
 extern int type;
 extern int punkty;
+extern int win;
 
 void lost(){
     FILE * results;
@@ -17,14 +18,11 @@ void lost(){
             int pkt;
             fscanf(results,"%d",&pkt);
             if(punkty > pkt) fprintf(results,"%d",punkty);
-            printf("przegrana");
-			//wyswietl wynik i ugabuga jak lepszy
-			while(1){
-                if(sfKeyboard_isKeyPressed(sfKeyQ)) exit(0); //Q zakonczy
-            }
+			fclose(results);
+            win = 1;
+            return;
 		}
     }
-    fclose(results);
 }
 
 void deleteRow(sfRectangleShape *background[10][15], sfRenderWindow *window){
@@ -50,7 +48,7 @@ void deleteRow(sfRectangleShape *background[10][15], sfRenderWindow *window){
 
 void addRandomBlock(sfRectangleShape *shapes[4], sfRectangleShape *background[10][15],sfRenderWindow *window){
     deleteRow(background,window);
-    lost();
+    //lost();
     int randomType = rand()%2+1;
     switch(randomType){
         case 1:
