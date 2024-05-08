@@ -29,7 +29,7 @@ int main()
 	defineSprites(shapes);
 	addRandomBlock(shapes, background, window);
 
-	sfFont *font = sfFont_createFromFile("../figure/Arial.ttf");
+	sfFont *font = sfFont_createFromFile("Arial.ttf");
 	sfText *text_result = createText(font);
 
 	struct timeval time_start;
@@ -88,6 +88,10 @@ int main()
 		}
 		else{
 			endBoard(window, background);
+			sprintf(result, "Points: %d", punkty);
+			sfText_setString(text_result, result);
+			sfRenderWindow_drawText(window, text_result, NULL);
+			printf("%s\n", result);
 			if(sfKeyboard_isKeyPressed(sfKeyQ)){
 				deleteAll(window, background, shapes, text_result, font);
 				exit(0);
