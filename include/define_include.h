@@ -4,7 +4,7 @@
 #include <sys/time.h>
 #include <stdlib.h>
 #include <unistd.h>
-//#include <stdbool.h>
+#include <stdbool.h>
 
 #ifndef INCLUDE_DEFINE_H
 #define INCLUDE_DEFINE_H

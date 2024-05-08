@@ -16,15 +16,42 @@ void lose(){
     }
 }
 
-// void add_block_1x1(){
-//     //lose();
-//     posx1 = 4;
-//     posy1 = 0;
-//     plansza[posx1][posy1] = 1;
-// }
+void deleteRow(sfRectangleShape *background[10][15], sfRenderWindow *window){
+    int check;
+    for(int i=14;i>=0;i--){
+        check = 1;
+        for(int j=0;j<10;j++) if(plansza[j][i]==0) check = 0;
+        if(check==1){
+            for(int j=0;j<10;j++) plansza[j][i] = 0;
+            for(int k=i;k>0;k--){
+                for(int g1=0;g1<10;g1++){
+                    plansza[g1][k] = plansza[g1][k-1];
+                    plansza[g1][k-1]=0;
+                }
+            }
+            i++;
+        }
+    }
+    adjustBoard(plansza, background);
+    drawBoard(window, background);
 
- void move_right(sfRenderWindow *window, sfRectangleShape *shapes[4], sfRectangleShape *background[10][15]){
-     switch(type){
+}
+
+void addRandomBlock(sfRectangleShape *shapes[4], sfRectangleShape *background[10][15],sfRenderWindow *window){
+    deleteRow(background,window);
+    int randomType = rand()%2+1;
+    switch(randomType){
+        case 1:
+            add_block_2x2(shapes);
+            break;
+        case 2: 
+            add_dlugas(shapes);
+            break;
+    }
+}
+
+void move_right(sfRenderWindow *window, sfRectangleShape *shapes[4], sfRectangleShape *background[10][15]){
+    switch(type){
         case 1:
             if(points[1].x < 9 && points[3].x < 9  && plansza[points[1].x+1][points[1].y] == 0 && plansza[points[3].x+1][points[3].y] == 0){
                 plansza[points[1].x][points[1].y]=0;
@@ -43,7 +70,7 @@ void lose(){
            }
            break;
         case 2:
-            if(points[0].x > 0 && points[2].x > 0  && plansza[points[0].x-1][points[0].y] == 0 && plansza[points[2].x-1][points[2].y] == 0 && points[1].x > 0 && points[3].x > 0  && plansza[points[1].x-1][points[1].y] == 0 && plansza[points[3].x-1][points[3].y] == 0){
+            if(points[1].x < 9 && points[3].x < 9  && plansza[points[1].x+1][points[1].y] == 0 && plansza[points[3].x+1][points[3].y] == 0 && points[0].x < 9 && points[2].x < 9  && plansza[points[0].x+1][points[0].y] == 0 && plansza[points[2].x+1][points[2].y] == 0){    
                 plansza[points[0].x][points[0].y]=0;
                 plansza[points[0].x+1][points[0].y]=1;
                 points[0].x++;
@@ -58,8 +85,22 @@ void lose(){
                 points[3].x++;
             }
             break;
-            
- 
+        case 3: //dlugas poziomo
+            if(points[3].x < 9 && plansza[points[3].x+1][points[3].y] == 0){
+                plansza[points[3].x][points[3].y]=0;
+                plansza[points[3].x+1][points[3].y]=1;
+                points[3].x++;
+                plansza[points[2].x][points[2].y]=0;
+                plansza[points[2].x+1][points[2].y]=1;
+                points[2].x++;
+                plansza[points[1].x][points[1].y]=0;
+                plansza[points[1].x+1][points[1].y]=1;
+                points[1].x++;
+                plansza[points[0].x][points[0].y]=0;
+                plansza[points[0].x+1][points[0].y]=1;
+                points[0].x++;
+            }
+            break;
     }
  }
  void move_left(sfRenderWindow *window, sfRectangleShape *shapes[4], sfRectangleShape *background[10][15]){
@@ -81,8 +122,7 @@ void lose(){
             }
             break;
         case 2:
-            if(points[1].x < 9 && points[3].x < 9  && plansza[points[1].x+1][points[1].y] == 0 && plansza[points[3].x+1][points[3].y] == 0 && points[0].x < 9 && points[2].x < 9  && plansza[points[0].x+1][points[0].y] == 0 && plansza[points[2].x+1][points[2].y] == 0){
-                
+            if(points[0].x > 0 && points[2].x > 0  && plansza[points[0].x-1][points[0].y] == 0 && plansza[points[2].x-1][points[2].y] == 0 && points[1].x > 0 && points[3].x > 0  && plansza[points[1].x-1][points[1].y] == 0 && plansza[points[3].x-1][points[3].y] == 0){
                 plansza[points[3].x][points[3].y]=0;
                 plansza[points[3].x-1][points[3].y]=1;
                 points[3].x--;
@@ -95,10 +135,25 @@ void lose(){
                 plansza[points[0].x][points[0].y]=0;
                 plansza[points[0].x-1][points[0].y]=1;
                 points[0].x--;
-                
-                
            }
            break;
+        case 3: //dlugas poziomo
+            if(points[0].x > 0 && plansza[points[0].x-1][points[0].y] == 0){
+                plansza[points[0].x][points[0].y]=0;
+                plansza[points[0].x-1][points[0].y]=1;
+                points[0].x--;
+                plansza[points[1].x][points[1].y]=0;
+                plansza[points[1].x-1][points[1].y]=1;
+                points[1].x--;
+                plansza[points[2].x][points[2].y]=0;
+                plansza[points[2].x-1][points[2].y]=1;
+                points[2].x--;
+                plansza[points[3].x][points[3].y]=0;
+                plansza[points[3].x-1][points[3].y]=1;
+                points[3].x--;
+            }
+            break;
+
     }
  }
 void move_down(sfRenderWindow *window, sfRectangleShape *shapes[4], sfRectangleShape *background[10][15]){
@@ -121,7 +176,7 @@ void move_down(sfRenderWindow *window, sfRectangleShape *shapes[4], sfRectangleS
                 
                 changeBoard(shapes, points, background); 
                 drawBoard(window, background);
-                add_dlugas(shapes);
+                addRandomBlock(shapes, background,window);
             } 
             break;
         case 2:
@@ -139,10 +194,9 @@ void move_down(sfRenderWindow *window, sfRectangleShape *shapes[4], sfRectangleS
                 plansza[points[0].x][points[0].y+1]=1;
                 points[0].y++;
             }else{
-                printf("dlugas\n");
                 changeBoard(shapes, points, background); 
                 drawBoard(window, background);
-                add_block_2x2(shapes);
+                addRandomBlock(shapes, background,window);
             }
             break;
         case 3:
@@ -162,7 +216,7 @@ void move_down(sfRenderWindow *window, sfRectangleShape *shapes[4], sfRectangleS
             }else{
                 changeBoard(shapes, points, background); 
                 drawBoard(window, background);
-                add_dlugas(shapes);
+                addRandomBlock(shapes, background,window);
             }
 
     }

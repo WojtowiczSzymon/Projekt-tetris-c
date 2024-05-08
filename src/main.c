@@ -25,7 +25,7 @@ int main(){
 	defineBoard(background);
 	sfRectangleShape *shapes[4]; //tablica czterech kwadratow, na ktore skalda sie ksztalt
 	defineSprites(shapes); 
-	add_block_2x2(shapes); //inicjowanie na poczatku 2x2
+	addRandomBlock(shapes, background,window); //inicjowanie na poczatku 2x2
 
  	struct timeval time_start;
     long long start_czas, end_czas;
@@ -67,7 +67,6 @@ int main(){
             gettimeofday(&time_start,NULL);
             end_czas = time_start.tv_sec;
         }
-		
 		move_down(window, shapes, background);
 		spriteMove(shapes);
         //printf("amogus\n");
