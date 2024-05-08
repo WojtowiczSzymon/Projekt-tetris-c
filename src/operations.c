@@ -6,14 +6,25 @@
 extern int plansza[10][15];
 extern point points[4];
 extern int type;
+extern int punkty;
 
-void lose(){
+void lost(){
+    FILE * results;
     for(int i=0;i<8;i++){
         if(plansza[i][0]==1){
+            // punkty >> plik;
+            results = fopen("results.txt","w+");
+            int pkt;
+            fscanf(results,"%d",&pkt);
+            if(punkty > pkt) fprintf(results,"%d",punkty);
             printf("przegrana");
-            exit(0);
-        }
+			//wyswietl wynik i ugabuga jak lepszy
+			while(1){
+                if(sfKeyboard_isKeyPressed(sfKeyQ)) exit(0); //Q zakonczy
+            }
+		}
     }
+    fclose(results);
 }
 
 void deleteRow(sfRectangleShape *background[10][15], sfRenderWindow *window){
@@ -22,6 +33,7 @@ void deleteRow(sfRectangleShape *background[10][15], sfRenderWindow *window){
         check = 1;
         for(int j=0;j<10;j++) if(plansza[j][i]==0) check = 0;
         if(check==1){
+            punkty++;
             for(int j=0;j<10;j++) plansza[j][i] = 0;
             for(int k=i;k>0;k--){
                 for(int g1=0;g1<10;g1++){
@@ -34,11 +46,11 @@ void deleteRow(sfRectangleShape *background[10][15], sfRenderWindow *window){
     }
     adjustBoard(plansza, background);
     drawBoard(window, background);
-
 }
 
 void addRandomBlock(sfRectangleShape *shapes[4], sfRectangleShape *background[10][15],sfRenderWindow *window){
     deleteRow(background,window);
+    lost();
     int randomType = rand()%2+1;
     switch(randomType){
         case 1:
