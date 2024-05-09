@@ -23,12 +23,16 @@ struct point{
 };
 typedef struct point point;
 
+void startGame();
+
 sfRenderWindow *createWindow();
 
 sfRectangleShape *defineSquare(sfVector2f position, sfVector2f size, sfColor fillColor, sfColor outlineColor);
 
+sfRectangleShape *createButton();
+
 sfText *createText(sfFont *font);
 
-void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font);
+void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font, sfRectangleShape *playAgainButton);
 
 #endif

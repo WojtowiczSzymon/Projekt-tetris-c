@@ -1,5 +1,21 @@
 #include "../include/define_include.h"
 
+extern int type;
+extern int punkty;
+extern int win;
+extern int plansza[10][15];
+
+void startGame(){
+	type = 1;
+	punkty = 0;
+	win = 0;
+	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 15; j++)
+			plansza[i][j] = 0;
+	}
+}
+
 sfRenderWindow *createWindow(){
     sfVideoMode mode = {4 * SQUARE_SIZE * 2.5, 6 * SQUARE_SIZE * 2.5, 32}; // git rozmiar
 	sfRenderWindow *window = sfRenderWindow_create(mode, "Tetris", sfResize | sfClose, NULL);
@@ -21,6 +37,14 @@ sfRectangleShape *defineSquare(sfVector2f position, sfVector2f size, sfColor fil
     return square;    
 }
 
+sfRectangleShape *createButton(){
+	sfVector2f play_again_pos = {4*SQUARE_SIZE, 12*SQUARE_SIZE}; //pozycja przycisku play Again
+	sfVector2f play_again_size = {2*SQUARE_SIZE, 1*SQUARE_SIZE};
+	sfRectangleShape *button = defineSquare(play_again_pos, play_again_size, sfBlack, sfBlack);
+	
+	return button;
+}
+
 sfText *createText(sfFont *font){
     sfText *textResults = sfText_create();
     sfText_setFont(textResults, font);
@@ -31,7 +55,7 @@ sfText *createText(sfFont *font){
     return textResults;
 }
 
-void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font){
+void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font, sfRectangleShape *playAgainButton){
     for (int i = 0; i < 10; i++)
 	{
 		for (int j = 0; j < 15; j++)
@@ -43,6 +67,7 @@ void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfR
 	{
 		sfRectangleShape_destroy(shapes[i]);
 	}
+	sfRectangleShape_destroy(playAgainButton);
 	sfText_destroy(text_result);
 	sfFont_destroy(font);
 	sfRenderWindow_destroy(window);
