@@ -43,28 +43,26 @@ sfRectangleShape *defineSquare(sfVector2f position, sfVector2f size, sfColor fil
     return square;    
 }
 
-sfRectangleShape *createButton(){
-	sfVector2f play_again_pos = {4*SQUARE_SIZE, 12*SQUARE_SIZE}; //pozycja przycisku play Again
-	sfVector2f play_again_size = {2*SQUARE_SIZE, 1*SQUARE_SIZE};
-	sfRectangleShape *button = defineSquare(play_again_pos, play_again_size, sfBlack, sfBlack);
+sfRectangleShape *createButton(sfVector2f buttonPos){
+	sfVector2f play_again_size = {4*SQUARE_SIZE, 1.5*SQUARE_SIZE};
+	sfRectangleShape *button = defineSquare(buttonPos, play_again_size, lightPurple, sfBlack);
 	
 	return button;
 }
 
-sfText *createText(sfFont *font, sfColor color){
-    sfText *textResults = sfText_create();
-    sfText_setFont(textResults, font);
-	sfText_setCharacterSize(textResults, 50);
-	sfText_setColor(textResults, color);
-    sfVector2f position = {5 * SQUARE_SIZE, 7 * SQUARE_SIZE};
-	sfText_setPosition(textResults, position);
+sfText *createText(sfFont *font, sfColor color, sfColor outlineColor, int size, sfVector2f position){
+    sfText *txt = sfText_create();
+    sfText_setFont(txt, font);
+	sfText_setCharacterSize(txt, size);
+	sfText_setColor(txt, color);
+	sfText_setOutlineThickness(txt, 2);
+	sfText_setOutlineColor(txt, outlineColor);
+	sfText_setPosition(txt, position);
 
-    return textResults;
+    return txt;
 }
 
-
-
-void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font, sfRectangleShape *playAgainButton){
+void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font, sfRectangleShape *playAgainButton, sfText *new_game, sfRectangleShape *resultBackground){
     for (int i = 0; i < 10; i++)
 	{
 		for (int j = 0; j < 15; j++)
@@ -78,6 +76,7 @@ void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfR
 	}
 	sfRectangleShape_destroy(playAgainButton);
 	sfText_destroy(text_result);
+	sfText_destroy(new_game);
 	sfFont_destroy(font);
 	sfRenderWindow_destroy(window);
 }

@@ -16,7 +16,7 @@ int main()
 	char result[10];
 	char newGame[] = "Play Again";
 	startGame();
-	//win = 1;
+	win = 1;
 	printf("%d", win);
 
 	// set window
@@ -29,10 +29,15 @@ int main()
 	addRandomBlock(shapes, background, window);
 
 	sfFont *font = sfFont_createFromFile("Arial.ttf");
-	sfText *text_result = createText(font, sfWhite);
-	sfText *new_game = createText(font, darkRed);
+	int size_text_result = 50, size_new_game = 30;
+	sfVector2f buttonPos = {3*SQUARE_SIZE, 12*SQUARE_SIZE};
+	sfVector2f resultPos = {2*SQUARE_SIZE, 5.5*SQUARE_SIZE};
+	sfVector2f resultsBackgroundSize = {7*SQUARE_SIZE, 2.5*SQUARE_SIZE};
+	sfText *text_result = createText(font, sfWhite, sfBlack, size_text_result, resultPos);
+	sfText *new_game = createText(font, sfWhite, sfBlack, size_new_game, (sfVector2f){buttonPos.x+0.65*SQUARE_SIZE, buttonPos.y+0.25*SQUARE_SIZE});
+	sfRectangleShape *resultsBackground = defineSquare((sfVector2f){resultPos.x-0.5*SQUARE_SIZE, resultPos.y-0.5*SQUARE_SIZE}, resultsBackgroundSize, dirtyBlue, sfBlack);
 
-	sfRectangleShape *playAgainButton = createButton();
+	sfRectangleShape *playAgainButton = createButton(buttonPos);
 	sfVector2i playAgain = {5 * SQUARE_SIZE, 12 * SQUARE_SIZE};
 
 	struct timeval time_start;
@@ -101,17 +106,17 @@ int main()
 		{
 			endBoard(window, background);
 			sfRenderWindow_drawRectangleShape(window, playAgainButton, NULL);
+			sfRenderWindow_drawRectangleShape(window, resultsBackground, NULL);
 			sprintf(result, "Points: %d", punkty);
 			sfText_setString(text_result, result);
+			sfText_setString(new_game, newGame);
 			sfRenderWindow_drawText(window, text_result, NULL);
 			sfRenderWindow_drawText(window, new_game, NULL);
-			// printf("%s\n", result);
 			if (event.type == sfEvtMouseButtonPressed)
 			{
 				if (sfMouse_isButtonPressed(sfMouseLeft))
 				{
 					sfVector2i mousePos = {event.mouseButton.x, event.mouseButton.y};
-					//printf("%d %d\t%d %d\n", mousePos.x, mousePos.y, playAgain.x, playAgain.y);
 					if (mousePos.x <= playAgain.x + SQUARE_SIZE && mousePos.x >= playAgain.x - SQUARE_SIZE && mousePos.y <= playAgain.y + SQUARE_SIZE && mousePos.y >= playAgain.y - SQUARE_SIZE)
 					{
 						startGame();
@@ -128,7 +133,7 @@ int main()
 			}
 			if (sfKeyboard_isKeyPressed(sfKeyQ))
 			{
-				deleteAll(window, background, shapes, text_result, font, playAgainButton);
+				deleteAll(window, background, shapes, text_result, font, playAgainButton, new_game, resultsBackground);
 				exit(0);
 			} // Q - quit
 		}
@@ -136,6 +141,6 @@ int main()
 		// pomocnicza plansza w terminalu
 	}
 	// clear everything
-	deleteAll(window, background, shapes, text_result, font, playAgainButton);
+	deleteAll(window, background, shapes, text_result, font, playAgainButton, new_game, resultsBackground);
 	return 0;
 }

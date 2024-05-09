@@ -25,6 +25,7 @@
 #define darkYellow sfColor_fromRGB(171,160,13)
 #define Purple sfColor_fromRGB(175,47,183)
 #define darkPurple sfColor_fromRGB(115,17,121)
+#define lightPurple sfColor_fromRGB(105,105,225)
 
 
 struct point{
@@ -45,10 +46,10 @@ sfRenderWindow *createWindow();
 
 sfRectangleShape *defineSquare(sfVector2f position, sfVector2f size, sfColor fillColor, sfColor outlineColor);
 
-sfRectangleShape *createButton();
+sfRectangleShape *createButton(sfVector2f buttonPos);
 
-sfText *createText(sfFont *font, sfColor color);
+sfText *createText(sfFont *font, sfColor color, sfColor outlineColor, int size, sfVector2f position);
 
-void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font, sfRectangleShape *playAgainButton);
+void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font, sfRectangleShape *playAgainButton, sfText *new_game, sfRectangleShape *resultBackground);
 
 #endif
