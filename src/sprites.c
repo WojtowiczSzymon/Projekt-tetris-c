@@ -40,7 +40,7 @@ void add_block_2x2(sfRectangleShape *shapes[4]){
 }
 
 void add_dlugas(sfRectangleShape *shapes[4]){
-    type = 2;
+    type = 2; //type = 3 -> poziomo
     points[0].x = 4; points[0].y = 0; //najwyzszy
     points[1].x = 4; points[1].y = 1; //2
     points[2].x = 4; points[2].y = 2; //3
@@ -48,5 +48,19 @@ void add_dlugas(sfRectangleShape *shapes[4]){
     for(int i = 0; i < 4; i++){
         plansza[4][i] = 1;
     }
+    definePosition(shapes);
+}
+
+void add_L(sfRectangleShape *shapes[4]){
+    type = 4;
+    /*
+    x 0 1 x
+    x x 2 x
+    x x 3 x
+    */
+    points[0].x = 3; points[0].y = 0; 
+    points[1].x = 4; points[1].y = 0; 
+    points[2].x = 4; points[2].y = 1; 
+    points[3].x = 4; points[3].y = 2; 
     definePosition(shapes);
 }
