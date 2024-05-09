@@ -33,7 +33,7 @@ void adjustBoard(int plansza[10][15], sfRectangleShape *background[10][15]){
                 sfRectangleShape_setOutlineColor(background[i][j], Gray);
             }
             else{
-                sfRectangleShape_setFillColor(background[i][j], darkRed);
+                sfRectangleShape_setFillColor(background[i][j], dirtyBlue);
             }
         }
     }
@@ -43,7 +43,7 @@ void endBoard(sfRenderWindow *window, sfRectangleShape *background[10][15]){
     for(int i = 0; i < 10; i++){
         for(int j = 0; j < 15; j++){
             sfRectangleShape_setFillColor(background[i][j], darkGray);
-            sfRectangleShape_setOutlineColor(background[i][j], sfBlack);
+            sfRectangleShape_setOutlineColor(background[i][j], darkGray);
         }
     }
     drawBoard(window, background);

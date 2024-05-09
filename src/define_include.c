@@ -4,6 +4,7 @@ extern int type;
 extern int punkty;
 extern int win;
 extern int plansza[10][15];
+extern blockColor colors[4];
 
 void startGame(){
 	type = 1;
@@ -14,6 +15,11 @@ void startGame(){
 		for (int j = 0; j < 15; j++)
 			plansza[i][j] = 0;
 	}
+	
+	colors[0].fill = Red; colors[0].outline = darkRed;
+	colors[1].fill = Green; colors[1].outline = darkGreen;
+	colors[2].fill = Yellow; colors[2].outline = darkYellow;
+	colors[3].fill = Purple; colors[3].outline = darkPurple;
 }
 
 sfRenderWindow *createWindow(){
@@ -45,15 +51,18 @@ sfRectangleShape *createButton(){
 	return button;
 }
 
-sfText *createText(sfFont *font){
+sfText *createText(sfFont *font, sfColor color){
     sfText *textResults = sfText_create();
     sfText_setFont(textResults, font);
-	sfText_setCharacterSize(textResults, 24);
+	sfText_setCharacterSize(textResults, 50);
+	sfText_setColor(textResults, color);
     sfVector2f position = {5 * SQUARE_SIZE, 7 * SQUARE_SIZE};
 	sfText_setPosition(textResults, position);
 
     return textResults;
 }
+
+
 
 void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font, sfRectangleShape *playAgainButton){
     for (int i = 0; i < 10; i++)

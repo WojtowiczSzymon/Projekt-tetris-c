@@ -1,9 +1,9 @@
 #include "../include/define_include.h"
 
-
 extern int plansza[10][15];
 extern point points[4];
 extern int type;
+extern blockColor colors[4];
 
 void defineSprites(sfRectangleShape *shapes[4]){
     for(int i = 0; i < 4; i++){
@@ -14,10 +14,13 @@ void defineSprites(sfRectangleShape *shapes[4]){
 }
 
 void definePosition(sfRectangleShape *shapes[4]){
+    blockColor col = colors[rand()%4];
     sfVector2f size = {SQUARE_SIZE, SQUARE_SIZE};
     for(int i = 0; i < 4; i++){
         sfVector2f position = {(float)points[i].x * SQUARE_SIZE, (float)points[i].y * SQUARE_SIZE};
         sfRectangleShape_setPosition(shapes[i], position);
+        sfRectangleShape_setFillColor(shapes[i], col.fill);
+        sfRectangleShape_setOutlineColor(shapes[i], col.outline);
     }
 }
 

@@ -12,4 +12,5 @@ void add_block_2x2(sfRectangleShape *shapes[4]);
 void add_dlugas(sfRectangleShape *shapes[4]);
 
 void add_L(sfRectangleShape *shapes[4]);
+
 #endif

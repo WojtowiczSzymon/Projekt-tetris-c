@@ -11,17 +11,33 @@
 #define INCLUDE_DEFINE_H
 
 #define SQUARE_SIZE 128/2.5
-#define darkBlue sfColor_fromRGB(14,20,61)
-#define Gray sfColor_fromRGB(43,51,100)
-#define darkRed sfColor_fromRGB(200,0,0)
-#define Red sfColor_fromRGB(135,5,5)
-#define darkGray sfColor_fromRGB(32,35,53)
+//colors for the board
+#define darkBlue sfColor_fromRGBA(14,20,61,255)
+#define Gray sfColor_fromRGBA(43,51,100,255)
+#define darkGray sfColor_fromRGBA(14,20,61,150)
+#define dirtyBlue sfColor_fromRGB(41,66,155)
+//colors for the blocks
+#define Red sfColor_fromRGB(220,30,30)
+#define darkRed sfColor_fromRGB(75,5,5)
+#define Green sfColor_fromRGB(46,176,47)
+#define darkGreen sfColor_fromRGB(3,86,5)
+#define Yellow sfColor_fromRGB(215,202,41)
+#define darkYellow sfColor_fromRGB(171,160,13)
+#define Purple sfColor_fromRGB(175,47,183)
+#define darkPurple sfColor_fromRGB(115,17,121)
+
 
 struct point{
     int x;
     int y;
 };
 typedef struct point point;
+
+struct blockColor{
+    sfColor fill;
+    sfColor outline;
+};
+typedef struct blockColor blockColor;
 
 void startGame();
 
@@ -31,7 +47,7 @@ sfRectangleShape *defineSquare(sfVector2f position, sfVector2f size, sfColor fil
 
 sfRectangleShape *createButton();
 
-sfText *createText(sfFont *font);
+sfText *createText(sfFont *font, sfColor color);
 
 void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font, sfRectangleShape *playAgainButton);
 

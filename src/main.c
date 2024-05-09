@@ -9,10 +9,12 @@ int plansza[10][15];
 int type;
 int punkty;
 int win;
+blockColor colors[4];
 
 int main()
 {
 	char result[10];
+	char newGame[] = "Play Again";
 	startGame();
 	//win = 1;
 	printf("%d", win);
@@ -27,7 +29,8 @@ int main()
 	addRandomBlock(shapes, background, window);
 
 	sfFont *font = sfFont_createFromFile("Arial.ttf");
-	sfText *text_result = createText(font);
+	sfText *text_result = createText(font, sfWhite);
+	sfText *new_game = createText(font, darkRed);
 
 	sfRectangleShape *playAgainButton = createButton();
 	sfVector2i playAgain = {5 * SQUARE_SIZE, 12 * SQUARE_SIZE};
@@ -101,6 +104,7 @@ int main()
 			sprintf(result, "Points: %d", punkty);
 			sfText_setString(text_result, result);
 			sfRenderWindow_drawText(window, text_result, NULL);
+			sfRenderWindow_drawText(window, new_game, NULL);
 			// printf("%s\n", result);
 			if (event.type == sfEvtMouseButtonPressed)
 			{
