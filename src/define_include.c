@@ -2,14 +2,14 @@
 
 extern int type;
 extern int punkty;
-extern int win;
+extern int mode;
 extern int plansza[10][15];
 extern blockColor colors[4];
 
 void startGame(){
 	type = 1;
 	punkty = 0;
-	win = 0;
+	mode = 1;
 	for (int i = 0; i < 10; i++)
 	{
 		for (int j = 0; j < 15; j++)
@@ -43,11 +43,28 @@ sfRectangleShape *defineSquare(sfVector2f position, sfVector2f size, sfColor fil
     return square;    
 }
 
+void defineMenu(sfRectangleShape *menu[6][11]){
+	for(int i = 0; i < 8; i++){
+		for(int j = 0; j < 8; j++){
+			sfVector2f position = {(i+2)*SQUARE_SIZE, (j+2)*SQUARE_SIZE,};
+			menu[i][j] = defineSquare(position, (sfVector2f){SQUARE_SIZE, SQUARE_SIZE}, dirtyBlue, dirtyBlue);
+		}
+	}
+}
+
+void drawMenu(sfRenderWindow *window, sfRectangleShape *menu[6][11]){
+	for(int i = 0; i < 10; i++){
+        for(int j = 0; j < 15; j++){
+            sfRenderWindow_drawRectangleShape(window, menu[i][j], NULL);
+        }
+    }
+}
+
 sfRectangleShape *createButton(sfVector2f buttonPos){
-	sfVector2f play_again_size = {4*SQUARE_SIZE, 1.5*SQUARE_SIZE};
-	sfRectangleShape *button = defineSquare(buttonPos, play_again_size, lightPurple, sfBlack);
+	sfVector2f buttonSize = {4*SQUARE_SIZE, 1.5*SQUARE_SIZE};
+	sfRectangleShape *b = defineSquare(buttonPos, buttonSize, lightPurple, sfBlack);
 	
-	return button;
+	return b;
 }
 
 sfText *createText(sfFont *font, sfColor color, sfColor outlineColor, int size, sfVector2f position){
@@ -62,7 +79,17 @@ sfText *createText(sfFont *font, sfColor color, sfColor outlineColor, int size, 
     return txt;
 }
 
-void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font, sfRectangleShape *playAgainButton, sfText *new_game, sfRectangleShape *resultBackground){
+void defineButtons(button buttons[4], sfFont *font){
+	sfVector2f position[] = {(sfVector2f){3*SQUARE_SIZE, 12*SQUARE_SIZE}, (sfVector2f){3*SQUARE_SIZE, 12*SQUARE_SIZE}, (sfVector2f){3*SQUARE_SIZE, 12*SQUARE_SIZE}, (sfVector2f){3*SQUARE_SIZE, 12*SQUARE_SIZE}};
+	int size = 40;
+	for(int i = 0; i < 4; i++){
+		buttons[i].b = createButton(position[i]);
+		buttons[i].t = createText(font, sfWhite, sfBlack, size, (sfVector2f){position[i].x+0.65*SQUARE_SIZE, position[i].y+0.25*SQUARE_SIZE});
+	}
+
+}
+
+void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font, sfText *new_game, sfRectangleShape *resultBackground){//, sfRectangleShape *menu[6][11]){
     for (int i = 0; i < 10; i++)
 	{
 		for (int j = 0; j < 15; j++)
@@ -70,11 +97,18 @@ void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfR
 			sfRectangleShape_destroy(background[i][j]);
 		}
 	}
+	// for(int i = 0; i < 6; i++){
+	// 	for(int j = 0; j < 11; j++){
+	// 		sfRectangleShape_destroy(menu[i][j]);
+	// 	}
+	// }
 	for (int i = 0; i < 4; i++)
 	{
 		sfRectangleShape_destroy(shapes[i]);
+		//sfRectangleShape_destroy(buttons[i].b);
+		//sfText_destroy(buttons[i].t);
+
 	}
-	sfRectangleShape_destroy(playAgainButton);
 	sfText_destroy(text_result);
 	sfText_destroy(new_game);
 	sfFont_destroy(font);

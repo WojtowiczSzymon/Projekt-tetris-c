@@ -40,16 +40,28 @@ struct blockColor{
 };
 typedef struct blockColor blockColor;
 
+struct button{
+    sfRectangleShape *b; //button
+    sfText *t; //text
+};
+typedef struct button button;
+
 void startGame();
 
 sfRenderWindow *createWindow();
 
 sfRectangleShape *defineSquare(sfVector2f position, sfVector2f size, sfColor fillColor, sfColor outlineColor);
 
+void drawMenu(sfRenderWindow *window, sfRectangleShape *menu[6][11]);
+
+void defineMenu(sfRectangleShape *menu[6][11]);
+
 sfRectangleShape *createButton(sfVector2f buttonPos);
 
 sfText *createText(sfFont *font, sfColor color, sfColor outlineColor, int size, sfVector2f position);
 
-void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font, sfRectangleShape *playAgainButton, sfText *new_game, sfRectangleShape *resultBackground);
+void defineButtons(button buttons[4], sfFont *font);
+
+void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font, sfText *new_game, sfRectangleShape *resultBackground); //sfRectangleShape *menu[6][11]);
 
 #endif

@@ -13,4 +13,5 @@ void add_dlugas(sfRectangleShape *shapes[4]);
 
 void add_L(sfRectangleShape *shapes[4]);
 
+void add_zygzag(sfRectangleShape *shapes[4]);
 #endif

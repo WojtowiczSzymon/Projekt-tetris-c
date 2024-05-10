@@ -7,7 +7,7 @@ extern int plansza[10][15];
 extern point points[4];
 extern int type;
 extern int punkty;
-extern int win;
+extern int mode;
 
 void lost(){
     FILE * results;
@@ -19,7 +19,7 @@ void lost(){
             fscanf(results,"%d",&pkt);
             if(punkty > pkt) fprintf(results,"%d",punkty);
 			fclose(results);
-            win = 1;
+            mode = 2;
             return;
 		}
     }
@@ -49,8 +49,8 @@ void deleteRow(sfRectangleShape *background[10][15], sfRenderWindow *window){
 void addRandomBlock(sfRectangleShape *shapes[4], sfRectangleShape *background[10][15],sfRenderWindow *window){
     deleteRow(background,window);
     lost();
-    if(win == 0){
-        int randomType = rand()%3+1;
+    if(mode == 1){
+        int randomType = rand()%4+1;
         switch(randomType){
             case 1:
                 add_block_2x2(shapes);
@@ -60,6 +60,9 @@ void addRandomBlock(sfRectangleShape *shapes[4], sfRectangleShape *background[10
                 break;
             case 3:
                 add_L(shapes);
+                break;
+            case 4:
+                add_zygzag(shapes);
                 break;
         }
     }
@@ -179,6 +182,39 @@ void move_right(sfRenderWindow *window, sfRectangleShape *shapes[4], sfRectangle
                 plansza[points[2].x+1][points[2].y]=1;
                 points[2].x++;
             }
+            break;
+        case 8:
+            if(points[0].x + 1 <= 9 && plansza[points[0].x+1][points[0].y]==0 && plansza[points[1].x+1][points[1].y]==0 &&  plansza[points[3].x+1][points[3].y]==0){
+                plansza[points[1].x][points[1].y]=0;
+                plansza[points[1].x+1][points[1].y]=1;
+                points[1].x++;
+                plansza[points[0].x][points[0].y]=0;
+                plansza[points[0].x+1][points[0].y]=1;
+                points[0].x++;
+                plansza[points[3].x][points[3].y]=0;
+                plansza[points[3].x+1][points[3].y]=1;
+                points[3].x++;
+                plansza[points[2].x][points[2].y]=0;
+                plansza[points[2].x+1][points[2].y]=1;
+                points[2].x++;
+            }
+        break;
+        case 9:
+            if(points[0].x + 1 <= 9 && plansza[points[0].x+1][points[0].y]==0 && plansza[points[2].x+1][points[2].y]==0){
+                plansza[points[0].x][points[0].y]=0;
+                plansza[points[0].x+1][points[0].y]=1;
+                points[0].x++;
+                plansza[points[2].x][points[2].y]=0;
+                plansza[points[2].x+1][points[2].y]=1;
+                points[2].x++;
+                plansza[points[3].x][points[3].y]=0;
+                plansza[points[3].x+1][points[3].y]=1;
+                points[3].x++;
+                plansza[points[1].x][points[1].y]=0;
+                plansza[points[1].x+1][points[1].y]=1;
+                points[1].x++;
+            }
+
     }
  }
 
@@ -296,7 +332,37 @@ void move_right(sfRenderWindow *window, sfRectangleShape *shapes[4], sfRectangle
                 points[0].x--;
            }
            break;
-
+        case 8:
+            if(points[3].x-1>=0 && plansza[points[2].x-1][points[2].y] == 0 && plansza[points[0].x-1][points[0].y] == 0 && plansza[points[3].x-1][points[3].y] == 0){
+                plansza[points[0].x][points[0].y]=0;
+                plansza[points[0].x-1][points[0].y]=1;
+                points[0].x--;
+                plansza[points[3].x][points[3].y]=0;
+                plansza[points[3].x-1][points[3].y]=1;
+                points[3].x--;
+                plansza[points[2].x][points[2].y]=0;
+                plansza[points[2].x-1][points[2].y]=1;
+                points[2].x--;
+                plansza[points[1].x][points[1].y]=0;
+                plansza[points[1].x-1][points[1].y]=1;
+                points[1].x--;
+            }
+            break;
+        case 9:
+            if(points[3].x-1>=0 && plansza[points[3].x-1][points[3].y]==0 && plansza[points[1].x-1][points[1].y]==0){
+                plansza[points[3].x][points[3].y]=0;
+                plansza[points[3].x-1][points[3].y]=1;
+                points[3].x--;
+                plansza[points[1].x][points[1].y]=0;
+                plansza[points[1].x-1][points[1].y]=1;
+                points[1].x--;
+                plansza[points[2].x][points[2].y]=0;
+                plansza[points[2].x-1][points[2].y]=1;
+                points[2].x--;
+                plansza[points[0].x][points[0].y]=0;
+                plansza[points[0].x-1][points[0].y]=1;
+                points[0].x--;
+            }
      }
  }
 void move_down(sfRenderWindow *window, sfRectangleShape *shapes[4], sfRectangleShape *background[10][15]){
@@ -437,14 +503,53 @@ void move_down(sfRenderWindow *window, sfRectangleShape *shapes[4], sfRectangleS
                 plansza[points[0].x][points[0].y]=0;
                 plansza[points[0].x][points[0].y+1]=1;
                 points[0].y++;
-            }else{
-                
+            }else{  
+                changeBoard(shapes, points, background); 
+                drawBoard(window, background);
+                addRandomBlock(shapes, background,window);
+            }
+            break;
+        case 8:
+            if(points[3].y+1<=14 && plansza[points[3].x][points[3].y+1]== 0 && plansza[points[1].x][points[1].y+1]== 0){
+                plansza[points[3].x][points[3].y]=0;
+                plansza[points[3].x][points[3].y+1]=1;
+                points[3].y++;
+                plansza[points[1].x][points[1].y]=0;
+                plansza[points[1].x][points[1].y+1]=1;
+                points[1].y++;
+                plansza[points[2].x][points[2].y]=0;
+                plansza[points[2].x][points[2].y+1]=1;
+                points[2].y++;
+                plansza[points[0].x][points[0].y]=0;
+                plansza[points[0].x][points[0].y+1]=1;
+                points[0].y++;
+            }else{  
+                changeBoard(shapes, points, background); 
+                drawBoard(window, background);
+                addRandomBlock(shapes, background,window);
+            }
+            break;
+        case 9:
+            if(points[0].y+1<=14 && plansza[points[0].x][points[0].y+1] == 0 && plansza[points[1].x][points[1].y+1] == 0 && plansza[points[3].x][points[3].y+1] == 0){
+                plansza[points[0].x][points[0].y]=0;
+                plansza[points[0].x][points[0].y+1]=1;
+                points[0].y++;
+                plansza[points[3].x][points[3].y]=0;
+                plansza[points[3].x][points[3].y+1]=1;
+                points[3].y++;
+                plansza[points[1].x][points[1].y]=0;
+                plansza[points[1].x][points[1].y+1]=1;
+                points[1].y++;
+                plansza[points[2].x][points[2].y]=0;
+                plansza[points[2].x][points[2].y+1]=1;
+                points[2].y++;
+            }else{  
                 changeBoard(shapes, points, background); 
                 drawBoard(window, background);
                 addRandomBlock(shapes, background,window);
             }
 
-
+            break;
     }
 }
 
@@ -491,7 +596,6 @@ void rotation(sfRectangleShape *shapes[4]){
             }
             break;
         case 4:
-        // strzelę sobie w łeb UwU
             /*
             x 0 1 x
             x x 2 x
@@ -565,6 +669,44 @@ void rotation(sfRectangleShape *shapes[4]){
                 plansza[points[3].x][points[3].y] = 1;
             }
             break;
+        case 8:
+            /*
+            x x 0 x
+            x 2 1 x
+            x 3 x x
+
+            x 3 2 x
+            x x 1 0
+            x x x x
+
+            */
+           if(points[0].x+1<=9 && plansza[points[0].x+1][points[0].y+1]==0 && plansza[points[3].x][points[3].y-2]==0){
+                type = 9;
+                plansza[points[0].x][points[0].y] = 0;
+                plansza[points[2].x][points[2].y] = 0;
+                plansza[points[3].x][points[3].y] = 0;
+                points[0].x += 1; points[0].y += 1; 
+                points[2].x += 1; points[2].y -= 1; 
+                points[3].x += 0; points[3].y -= 2; 
+                plansza[points[0].x][points[0].y] = 1;
+                plansza[points[2].x][points[2].y] = 1;
+                plansza[points[3].x][points[3].y] = 1;
+           }
+           break;
+        case 9:
+            if(points[0].y-2>=0 && plansza[points[2].x-1][points[2].y+1]==0 && plansza[points[3].x][points[3].y+2]==0){
+                type = 8;
+                plansza[points[0].x][points[0].y] = 0;
+                plansza[points[2].x][points[2].y] = 0;
+                plansza[points[3].x][points[3].y] = 0;
+                points[0].x -= 1; points[0].y -= 1; 
+                points[2].x -= 1; points[2].y += 1; 
+                points[3].x += 0; points[3].y += 2; 
+                plansza[points[0].x][points[0].y] = 1;
+                plansza[points[2].x][points[2].y] = 1;
+                plansza[points[3].x][points[3].y] = 1;
+           }
+           break;
     }
 }
 

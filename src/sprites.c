@@ -67,3 +67,17 @@ void add_L(sfRectangleShape *shapes[4]){
     points[3].x = 4; points[3].y = 2; 
     definePosition(shapes);
 }
+void add_zygzag(sfRectangleShape *shapes[4]){
+    type = 8;
+    /*
+    x x 0 x
+    x 2 1 x
+    x 3 x x
+    */
+
+    points[0].x = 4; points[0].y = 0; 
+    points[1].x = 4; points[1].y = 1; 
+    points[2].x = 3; points[2].y = 1;
+    points[3].x = 3; points[3].y = 2;
+    definePosition(shapes);
+}
