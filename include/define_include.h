@@ -1,11 +1,12 @@
 #include <SFML/Graphics.h>
 #include <SFML/Window.h>
-//#include <SF
+
 #include <stdio.h>
 #include <sys/time.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdbool.h>
+#include <time.h>
 
 #ifndef INCLUDE_DEFINE_H
 #define INCLUDE_DEFINE_H
@@ -66,17 +67,11 @@ sfRenderWindow *createWindow();
 
 sfRectangleShape *createSquare(sfVector2f position, sfVector2f size, sfColor fillColor, sfColor outlineColor);
 
-void defineMenu(sfRectangleShape *menu[6][11]);
-
-void defineHelp(sfText *helpText[4], sfRectangleShape *helpBackground[8][6], sfFont *font, image images[3]);
-
-void drawMenu(sfRenderWindow *window, sfRectangleShape *menu[6][11], buttonRec buttons[5], sfFont *font, int type);
-
-void drawHelp(sfRenderWindow *window, sfRectangleShape *helpBackground[8][6], sfText *gameText[5], buttonCirc bExit[1], image images[3]);
-
 sfText *createText(sfFont *font, sfColor color, sfColor outlineColor, int size, sfVector2f position, float thickness);
 
 void defineButtons(buttonRec buttons[5], buttonCirc bExit[1], sfFont *font);
+
+sfSprite *createPicture(sfTexture *t, sfVector2f position);
 
 void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfFont *font, sfFont *specialFont, sfRectangleShape *menu[6][11], buttonRec buttons[5], buttonCirc bExit[1], sfText *gameText[5], sfRectangleShape *helpBackground[8][6], image images[3]);
 

@@ -14,6 +14,8 @@ void defineSprites(sfRectangleShape *shapes[4]){
 }
 
 void definePosition(sfRectangleShape *shapes[4]){
+    time_t t;
+    srand((unsigned) time(&t));
     blockColor col = colors[rand()%4];
     sfVector2f size = {SQUARE_SIZE, SQUARE_SIZE};
     for(int i = 0; i < 4; i++){

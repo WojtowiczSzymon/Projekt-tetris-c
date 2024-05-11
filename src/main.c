@@ -1,5 +1,5 @@
 #include "../include/define_include.h"
-
+#include "../include/menu.h"
 #include "../include/operations.h"
 #include "../include/board.h"
 #include "../include/sprites.h"
@@ -9,7 +9,7 @@ int plansza[10][15];
 int blockType;
 int punkty;
 int newRecord;
-int mode = 0; // 0 - start, 1 - play, 3 - end, 2 - help, 4 - back to menu
+int mode = 0; // 0 - start, 1 - play, 2 - help, 3 - end, 4 - back to menu
 
 blockColor colors[4];
 
@@ -17,8 +17,7 @@ int main()
 {
 	char result[10];
 	startGame();
-	mode = 3;
-	
+
 	// set window
 	sfRenderWindow *window = createWindow();
 
@@ -26,6 +25,7 @@ int main()
 	sfRectangleShape *menu[6][11];
 	sfRectangleShape *helpBackground[8][6];
 	defineMenu(menu);
+
 	sfText *gameText[5];
 	sfFont *font = sfFont_createFromFile("Arial.ttf");
 	sfFont *specialFont = sfFont_createFromFile("Nurjan_Free.ttf");
@@ -35,13 +35,12 @@ int main()
 	//game
 	sfRectangleShape *background[10][15];
 	defineBoard(background);
-	sfRectangleShape *shapes[4]; // tablica czterech kwadratow, na ktore skalda sie ksztalt
+	sfRectangleShape *shapes[4]; // array of 4 squares that make a specific shape
 	defineSprites(shapes);
 
-	//end screen
+	
 	gameText[3] = createText(font, sfWhite, darkBlue, 45, (sfVector2f){2.75*SQUARE_SIZE, 5*SQUARE_SIZE},3);
 	gameText[4] = createText(specialFont, darkRed, Yellow, 50, (sfVector2f){2.35*SQUARE_SIZE, 3*SQUARE_SIZE},3);
-	//sfRectangleShape *resultsBackground = createSquare((sfVector2f){resultPos.x-0.5*SQUARE_SIZE, resultPos.y-0.5*SQUARE_SIZE}, resultsBackgroundSize, dirtyBlue, sfBlack);
 
 	buttonRec buttons[5]; //0 - start game, 1 - help, 2 - exit, 3 - play again, 4 - back to menu
 	buttonCirc bExit[1];
@@ -65,6 +64,7 @@ int main()
 
 		drawBoard(window, background);
 
+		if(mode == 6) mode = 0;
 		if(mode == 0){
 			drawMenu(window, menu, buttons, font, 1);
 			if (event.type == sfEvtMouseButtonPressed)
@@ -144,7 +144,7 @@ int main()
 			// 	printf("\n");
 			// }
 		}
-		else if(mode == 3)
+		else if(mode == 3) 
 		{
 			endBoard(window, background);
 			drawMenu(window, menu, buttons, font, 2);
@@ -159,7 +159,6 @@ int main()
 				if (sfMouse_isButtonPressed(sfMouseLeft))
 				{
 					sfVector2i mousePos = {event.mouseButton.x, event.mouseButton.y};
-					printf("mouse: %d %d\nhorizontal range %d %d\nvertical range: %d %d\n", mousePos.x, mousePos.y, buttons[3].pos.x, buttons[3].pos.x + 10, buttons[3].pos.y, buttons[3].pos.y+10);
 					if (mousePos.x >= buttons[3].pos.x && mousePos.x <= buttons[3].pos.x + 4*SQUARE_SIZE && mousePos.y <= buttons[3].pos.y+1.5*SQUARE_SIZE && mousePos.y >= buttons[3].pos.y)
 					{
 						startGame();
@@ -170,15 +169,13 @@ int main()
 					else if (mousePos.x >= buttons[4].pos.x && mousePos.x <= buttons[4].pos.x + 4*SQUARE_SIZE && mousePos.y <= buttons[4].pos.y+1.5*SQUARE_SIZE && mousePos.y >= buttons[4].pos.y)
 					{
 						startGame();
-						printf("mode %d\n", mode);
 						gettimeofday(&time_start, NULL);
 						start_czas = time_start.tv_sec;
 						end_czas = time_start.tv_sec;
-						while (end_czas - start_czas < 0.1){gettimeofday(&time_start, NULL); end_czas = time_start.tv_sec;}
+						while (end_czas - start_czas < 0.2){gettimeofday(&time_start, NULL); end_czas = time_start.tv_sec;}
 						sleep(1.0 - end_czas + start_czas);
 						newGameBoard(window, background);
-						// sleep(1);
-						mode = 0;
+						mode = 6;
 					}
 				}
 			}
@@ -190,6 +187,7 @@ int main()
 			}
 		sfRenderWindow_display(window);
 	}
+
 	// clear everything
 	deleteAll(window, background, shapes, font, specialFont, menu, buttons, bExit, gameText, helpBackground, images);
 	return 0;
