@@ -29,7 +29,8 @@ int main()
 	defineMenu(menu);
 	sfText *gameText[4];
 	sfFont *font = sfFont_createFromFile("Arial.ttf");
-	defineHelp(gameText, helpBackground, font);
+	image images[3];
+	defineHelp(gameText, helpBackground, font, images);
 
 	//game
 	sfRectangleShape *background[10][15];
@@ -92,14 +93,14 @@ int main()
 						mode = 2;
 					}
 					else if(mousePos.x >= buttons[2].pos.x && mousePos.x <= buttons[2].pos.x + 4*SQUARE_SIZE && mousePos.y <= buttons[2].pos.y+1.5*SQUARE_SIZE && mousePos.y >= buttons[2].pos.y){
-						deleteAll(window, background, shapes, text_result, font, resultsBackground, menu, buttons, bExit, gameText, helpBackground);
+						deleteAll(window, background, shapes, text_result, font, resultsBackground, menu, buttons, bExit, gameText, helpBackground, images);
 						exit(0);
 					}
 				}
 			}
 		}
 		if(mode == 2){
-			drawHelp(window, helpBackground, gameText, bExit);
+			drawHelp(window, helpBackground, gameText, bExit, images);
 			if (event.type == sfEvtMouseButtonPressed){
 				if (sfMouse_isButtonPressed(sfMouseLeft)){
 					sfVector2i mousePos = {event.mouseButton.x, event.mouseButton.y};
@@ -138,6 +139,7 @@ int main()
 				gettimeofday(&time_start, NULL);
 				end_czas = time_start.tv_sec;
 			}
+			
 			move_down(window, shapes, background);
 			spriteMove(shapes);
 
@@ -187,15 +189,15 @@ int main()
 					//powrot do menu
 				}
 			}
-			if (sfKeyboard_isKeyPressed(sfKeyQ))
-			{
-				deleteAll(window, background, shapes, text_result, font, resultsBackground, menu, buttons, bExit, gameText, helpBackground);
-				exit(0);
-			} // Q - quit
 		}
+		if (sfKeyboard_isKeyPressed(sfKeyQ))
+			{
+				deleteAll(window, background, shapes, text_result, font, resultsBackground, menu, buttons, bExit, gameText, helpBackground, images);
+				exit(0);
+			}
 		sfRenderWindow_display(window);
 	}
 	// clear everything
-	deleteAll(window, background, shapes, text_result, font, resultsBackground, menu, buttons, bExit, gameText, helpBackground);
+	deleteAll(window, background, shapes, text_result, font, resultsBackground, menu, buttons, bExit, gameText, helpBackground, images);
 	return 0;
 }

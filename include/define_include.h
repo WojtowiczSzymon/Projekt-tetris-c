@@ -54,6 +54,12 @@ struct buttonCirc{
 };
 typedef struct buttonCirc buttonCirc;
 
+struct image{
+    sfTexture *texture;
+    sfSprite *picture;
+};
+typedef struct image image;
+
 void startGame();
 
 sfRenderWindow *createWindow();
@@ -62,16 +68,16 @@ sfRectangleShape *createSquare(sfVector2f position, sfVector2f size, sfColor fil
 
 void defineMenu(sfRectangleShape *menu[6][11]);
 
-void defineHelp(sfText *helpText[4], sfRectangleShape *helpBackground[8][6], sfFont *font);
+void defineHelp(sfText *helpText[4], sfRectangleShape *helpBackground[8][6], sfFont *font, image images[3]);
 
 void drawMenu(sfRenderWindow *window, sfRectangleShape *menu[6][11], buttonRec buttons[5], sfFont *font, int type);
 
-void drawHelp(sfRenderWindow *window, sfRectangleShape *helpBackground[8][6], sfText *gameText[4], buttonCirc bExit[1]);
+void drawHelp(sfRenderWindow *window, sfRectangleShape *helpBackground[8][6], sfText *gameText[4], buttonCirc bExit[1], image images[3]);
 
 sfText *createText(sfFont *font, sfColor color, sfColor outlineColor, int size, sfVector2f position, float thickness);
 
 void defineButtons(buttonRec buttons[5], buttonCirc bExit[1], sfFont *font);
 
-void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font, sfRectangleShape *resultBackground, sfRectangleShape *menu[6][11], buttonRec buttons[5], buttonCirc bExit[1], sfText *helpText[4], sfRectangleShape *helpBackground[8][6]);
+void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font, sfRectangleShape *resultBackground, sfRectangleShape *menu[6][11], buttonRec buttons[5], buttonCirc bExit[1], sfText *helpText[4], sfRectangleShape *helpBackground[8][6], image images[3]);
 
 #endif
