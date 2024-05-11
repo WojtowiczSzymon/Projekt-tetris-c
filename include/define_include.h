@@ -40,28 +40,34 @@ struct blockColor{
 };
 typedef struct blockColor blockColor;
 
-struct button{
+struct buttonRec{
     sfRectangleShape *b; //button
     sfText *t; //text
+    sfVector2i pos;
 };
-typedef struct button button;
+typedef struct buttonRec buttonRec;
+
+struct buttonCirc{
+    sfCircleShape *b;
+    sfText *t;
+    sfVector2i pos;
+};
+typedef struct buttonCirc buttonCirc;
 
 void startGame();
 
 sfRenderWindow *createWindow();
 
-sfRectangleShape *defineSquare(sfVector2f position, sfVector2f size, sfColor fillColor, sfColor outlineColor);
-
-void drawMenu(sfRenderWindow *window, sfRectangleShape *menu[6][11]);
+sfRectangleShape *createSquare(sfVector2f position, sfVector2f size, sfColor fillColor, sfColor outlineColor);
 
 void defineMenu(sfRectangleShape *menu[6][11]);
 
-sfRectangleShape *createButton(sfVector2f buttonPos);
+void drawMenu(sfRenderWindow *window, sfRectangleShape *menu[6][11], buttonRec buttons[4], int type);
 
 sfText *createText(sfFont *font, sfColor color, sfColor outlineColor, int size, sfVector2f position);
 
-void defineButtons(button buttons[4], sfFont *font);
+void defineButtons(buttonRec buttons[4], sfFont *font);
 
-void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font, sfText *new_game, sfRectangleShape *resultBackground); //sfRectangleShape *menu[6][11]);
+void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font, sfRectangleShape *resultBackground, sfRectangleShape *menu[6][11], buttonRec buttons[4]);//, buttonCirc bExit);
 
 #endif

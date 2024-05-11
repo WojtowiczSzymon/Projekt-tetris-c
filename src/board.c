@@ -5,7 +5,7 @@ void defineBoard(sfRectangleShape *background[10][15]){
         for(int j = 0; j < 15; j++){
             sfVector2f position = {i * SQUARE_SIZE, j * SQUARE_SIZE}; 
             sfVector2f size = {SQUARE_SIZE, SQUARE_SIZE}; //128-square size
-            background[i][j] = defineSquare(position, size, darkBlue, Gray);
+            background[i][j] = createSquare(position, size, darkBlue, Gray);
         }
     }
 }

@@ -9,7 +9,7 @@ void defineSprites(sfRectangleShape *shapes[4]){
     for(int i = 0; i < 4; i++){
         sfVector2f position = {0,0};
         sfVector2f size = {SQUARE_SIZE, SQUARE_SIZE};
-        shapes[i] = defineSquare(position, size, darkRed, Red); 
+        shapes[i] = createSquare(position, size, darkRed, Red); 
     }
 }
 
