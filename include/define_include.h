@@ -48,7 +48,7 @@ struct buttonRec{
 typedef struct buttonRec buttonRec;
 
 struct buttonCirc{
-    sfCircleShape *b;
+    sfCircleShape *c;
     sfText *t;
     sfVector2i pos;
 };
@@ -62,12 +62,14 @@ sfRectangleShape *createSquare(sfVector2f position, sfVector2f size, sfColor fil
 
 void defineMenu(sfRectangleShape *menu[6][11]);
 
-void drawMenu(sfRenderWindow *window, sfRectangleShape *menu[6][11], buttonRec buttons[4], int type);
+void drawMenu(sfRenderWindow *window, sfRectangleShape *menu[6][11], buttonRec buttons[5], buttonCirc bExit[1], int type);
+
+void drawHelp();
 
 sfText *createText(sfFont *font, sfColor color, sfColor outlineColor, int size, sfVector2f position);
 
-void defineButtons(buttonRec buttons[4], sfFont *font);
+void defineButtons(buttonRec buttons[5], buttonCirc bExit[1], sfFont *font);
 
-void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font, sfRectangleShape *resultBackground, sfRectangleShape *menu[6][11], buttonRec buttons[4]);//, buttonCirc bExit);
+void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font, sfRectangleShape *resultBackground, sfRectangleShape *menu[6][11], buttonRec buttons[5], buttonCirc bExit[1]);
 
 #endif

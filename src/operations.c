@@ -7,6 +7,7 @@ extern int plansza[10][15];
 extern point points[4];
 extern int type;
 extern int punkty;
+extern int newRecord;
 extern int mode;
 
 void lost(){
@@ -17,7 +18,10 @@ void lost(){
             results = fopen("results.txt","w+");
             int pkt;
             fscanf(results,"%d",&pkt);
-            if(punkty > pkt) fprintf(results,"%d",punkty);
+            if(punkty > pkt){
+                newRecord = 1;
+                fprintf(results,"%d",punkty);
+            }
 			fclose(results);
             mode = 2;
             return;
