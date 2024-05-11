@@ -2,7 +2,7 @@
 
 extern int plansza[10][15];
 extern point points[4];
-extern int type;
+extern int blockType;
 extern blockColor colors[4];
 
 void defineSprites(sfRectangleShape *shapes[4]){
@@ -31,7 +31,7 @@ void drawSprites(sfRenderWindow *window, sfRectangleShape *shapes[4]){
 }
 
 void add_block_2x2(sfRectangleShape *shapes[4]){
-    type = 1;
+    blockType = 1;
     points[0].x = 4; points[0].y = 0; //najwyzszy, najbardziej na lewo
     points[1].x = 5; points[1].y = 0; // najwyzszy, na prawo
     points[2].x = 4; points[2].y = 1; //najnizszy, na lewo
@@ -43,7 +43,7 @@ void add_block_2x2(sfRectangleShape *shapes[4]){
 }
 
 void add_dlugas(sfRectangleShape *shapes[4]){
-    type = 2; //type = 3 -> poziomo
+    blockType = 2; //type = 3 -> poziomo
     points[0].x = 4; points[0].y = 0; //najwyzszy
     points[1].x = 4; points[1].y = 1; //2
     points[2].x = 4; points[2].y = 2; //3
@@ -55,7 +55,7 @@ void add_dlugas(sfRectangleShape *shapes[4]){
 }
 
 void add_L(sfRectangleShape *shapes[4]){
-    type = 4;
+    blockType = 4;
     /*
     x 0 1 x
     x x 2 x
@@ -68,7 +68,7 @@ void add_L(sfRectangleShape *shapes[4]){
     definePosition(shapes);
 }
 void add_zygzag(sfRectangleShape *shapes[4]){
-    type = 8;
+    blockType = 8;
     /*
     x x 0 x
     x 2 1 x

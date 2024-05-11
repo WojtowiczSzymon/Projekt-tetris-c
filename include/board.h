@@ -13,4 +13,6 @@ void adjustBoard(int plansza[10][15], sfRectangleShape *background[10][15]);
 
 void endBoard(sfRenderWindow *window, sfRectangleShape *background[10][15]);
 
+void newGameBoard(sfRenderWindow *window, sfRectangleShape *background[10][15]);
+
 #endif

@@ -48,3 +48,14 @@ void endBoard(sfRenderWindow *window, sfRectangleShape *background[10][15]){
     }
     drawBoard(window, background);
 }
+
+
+void newGameBoard(sfRenderWindow *window, sfRectangleShape *background[10][15]){
+    for(int i = 0; i < 10; i++){
+        for(int j = 0; j < 15; j++){
+            sfRectangleShape_setFillColor(background[i][j], darkBlue);
+            sfRectangleShape_setOutlineColor(background[i][j], Gray);
+        }
+    }
+    drawBoard(window, background);
+}

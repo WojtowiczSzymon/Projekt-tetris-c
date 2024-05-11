@@ -5,7 +5,7 @@
 
 extern int plansza[10][15];
 extern point points[4];
-extern int type;
+extern int blockType;
 extern int punkty;
 extern int newRecord;
 extern int mode;
@@ -23,7 +23,7 @@ void lost(){
                 fprintf(results,"%d",punkty);
             }
 			fclose(results);
-            mode = 2;
+            mode = 3;
             return;
 		}
     }
@@ -73,7 +73,7 @@ void addRandomBlock(sfRectangleShape *shapes[4], sfRectangleShape *background[10
 }
 
 void move_right(sfRenderWindow *window, sfRectangleShape *shapes[4], sfRectangleShape *background[10][15]){
-    switch(type){
+    switch(blockType){
         case 1:
             if(points[1].x < 9 && points[3].x < 9  && plansza[points[1].x+1][points[1].y] == 0 && plansza[points[3].x+1][points[3].y] == 0){
                 plansza[points[1].x][points[1].y]=0;
@@ -223,7 +223,7 @@ void move_right(sfRenderWindow *window, sfRectangleShape *shapes[4], sfRectangle
  }
 
  void move_left(sfRenderWindow *window, sfRectangleShape *shapes[4], sfRectangleShape *background[10][15]){
-     switch(type){
+     switch(blockType){
         case 1:
             if(points[0].x > 0 && points[2].x > 0  && plansza[points[0].x-1][points[0].y] == 0 && plansza[points[2].x-1][points[2].y] == 0){
                 plansza[points[0].x][points[0].y]=0;
@@ -370,7 +370,7 @@ void move_right(sfRenderWindow *window, sfRectangleShape *shapes[4], sfRectangle
      }
  }
 void move_down(sfRenderWindow *window, sfRectangleShape *shapes[4], sfRectangleShape *background[10][15]){
-    switch(type){
+    switch(blockType){
         case 1:
             if(points[3].y < 14 && points[2].y < 14  && plansza[points[3].x][points[3].y+1] == 0 && plansza[points[2].x][points[2].y+1] == 0){
                 plansza[points[3].x][points[3].y]=0;
@@ -558,7 +558,7 @@ void move_down(sfRenderWindow *window, sfRectangleShape *shapes[4], sfRectangleS
 }
 
 void rotation(sfRectangleShape *shapes[4]){
-    switch(type){
+    switch(blockType){
         case 2:
             /*
                 x 0 x x
@@ -572,7 +572,7 @@ void rotation(sfRectangleShape *shapes[4]){
                 x x x x
            */
             if(points[0].x-1 >= 0 && points[2].x+1 <= 9 && points[3].x+2 <= 9 && plansza[points[0].x-1][points[0].y+1]==0 && plansza[points[2].x+1][points[2].y-1]==0 && plansza[points[3].x+2][points[3].y-2]==0){
-                type = 3;
+                blockType = 3;
                 plansza[points[0].x][points[0].y] = 0;
                 plansza[points[2].x][points[2].y] = 0;
                 plansza[points[3].x][points[3].y] = 0;
@@ -587,7 +587,7 @@ void rotation(sfRectangleShape *shapes[4]){
         case 3:
             printf("rot2\n");
             if(points[0].y -1 >=0 && points[2].y+1 <= 14 && points[3].y+2 <= 14 && plansza[points[0].x+1][points[0].y-1]==0 && plansza[points[2].x-1][points[2].y+1]==0 && plansza[points[3].x-2][points[3].y+2]==0){
-                type = 2;
+                blockType = 2;
                 plansza[points[0].x][points[0].y] = 0;
                 plansza[points[2].x][points[2].y] = 0;
                 plansza[points[3].x][points[3].y] = 0;
@@ -619,7 +619,7 @@ void rotation(sfRectangleShape *shapes[4]){
             
             */
            if(plansza[points[0].x][points[0].y+2]==0 && plansza[points[1].x-1][points[1].y+1]==0 && points[3].x+1<=9 && plansza[points[3].x+1][points[3].y-1]==0){
-                type = 5;
+                blockType = 5;
                 plansza[points[0].x][points[0].y] = 0;
                 plansza[points[1].x][points[1].y] = 0;
                 plansza[points[3].x][points[3].y] = 0;
@@ -633,7 +633,7 @@ void rotation(sfRectangleShape *shapes[4]){
             break;
         case 5:
             if(plansza[points[0].x+2][points[0].y]==0 && plansza[points[1].x+1][points[1].y+1]==0 && points[3].y-1>=0 && plansza[points[3].x-1][points[3].y-1]==0){
-                type = 6;
+                blockType = 6;
                 plansza[points[0].x][points[0].y] = 0;
                 plansza[points[1].x][points[1].y] = 0;
                 plansza[points[3].x][points[3].y] = 0;
@@ -647,7 +647,7 @@ void rotation(sfRectangleShape *shapes[4]){
             break;
         case 6:
             if(plansza[points[0].x][points[0].y-2]==0 && plansza[points[1].x+1][points[1].y-1]==0 && points[3].y+1<=14 && plansza[points[3].x-1][points[3].y+1]==0){
-                type = 7;
+                blockType = 7;
                 plansza[points[0].x][points[0].y] = 0;
                 plansza[points[1].x][points[1].y] = 0;
                 plansza[points[3].x][points[3].y] = 0;
@@ -661,7 +661,7 @@ void rotation(sfRectangleShape *shapes[4]){
             break;
         case 7:
             if(plansza[points[0].x-2][points[0].y]==0 && plansza[points[1].x-1][points[1].y-1]==0 && points[3].y+1<=14 && plansza[points[3].x+1][points[3].y+1]==0){
-                type = 4;
+                blockType = 4;
                 plansza[points[0].x][points[0].y] = 0;
                 plansza[points[1].x][points[1].y] = 0;
                 plansza[points[3].x][points[3].y] = 0;
@@ -685,7 +685,7 @@ void rotation(sfRectangleShape *shapes[4]){
 
             */
            if(points[0].x+1<=9 && plansza[points[0].x+1][points[0].y+1]==0 && plansza[points[3].x][points[3].y-2]==0){
-                type = 9;
+                blockType = 9;
                 plansza[points[0].x][points[0].y] = 0;
                 plansza[points[2].x][points[2].y] = 0;
                 plansza[points[3].x][points[3].y] = 0;
@@ -699,7 +699,7 @@ void rotation(sfRectangleShape *shapes[4]){
            break;
         case 9:
             if(points[0].y-2>=0 && plansza[points[2].x-1][points[2].y+1]==0 && plansza[points[3].x][points[3].y+2]==0){
-                type = 8;
+                blockType = 8;
                 plansza[points[0].x][points[0].y] = 0;
                 plansza[points[2].x][points[2].y] = 0;
                 plansza[points[3].x][points[3].y] = 0;

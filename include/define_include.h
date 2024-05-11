@@ -78,6 +78,6 @@ sfText *createText(sfFont *font, sfColor color, sfColor outlineColor, int size, 
 
 void defineButtons(buttonRec buttons[5], buttonCirc bExit[1], sfFont *font);
 
-void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font, sfRectangleShape *resultBackground, sfRectangleShape *menu[6][11], buttonRec buttons[5], buttonCirc bExit[1], sfText *helpText[4], sfRectangleShape *helpBackground[8][6], image images[3]);
+void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfFont *font, sfRectangleShape *menu[6][11], buttonRec buttons[5], buttonCirc bExit[1], sfText *helpText[4], sfRectangleShape *helpBackground[8][6], image images[3]);
 
 #endif
