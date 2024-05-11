@@ -18,7 +18,7 @@ int main()
 	char result[10];
 	startGame();
 	mode = 3;
-
+	
 	// set window
 	sfRenderWindow *window = createWindow();
 
@@ -26,8 +26,9 @@ int main()
 	sfRectangleShape *menu[6][11];
 	sfRectangleShape *helpBackground[8][6];
 	defineMenu(menu);
-	sfText *gameText[4];
+	sfText *gameText[5];
 	sfFont *font = sfFont_createFromFile("Arial.ttf");
+	sfFont *specialFont = sfFont_createFromFile("Nurjan_Free.ttf");
 	image images[3];
 	defineHelp(gameText, helpBackground, font, images);
 
@@ -38,9 +39,8 @@ int main()
 	defineSprites(shapes);
 
 	//end screen
-	int size_text_result = 50;
-	sfVector2f resultPos = {2*SQUARE_SIZE, 5.5*SQUARE_SIZE};
-	gameText[3] = createText(font, sfWhite, sfBlack, size_text_result, (sfVector2f){resultPos.x+1*SQUARE_SIZE, resultPos.y},1);
+	gameText[3] = createText(font, sfWhite, darkBlue, 45, (sfVector2f){2.75*SQUARE_SIZE, 5*SQUARE_SIZE},3);
+	gameText[4] = createText(specialFont, darkRed, Yellow, 50, (sfVector2f){2.35*SQUARE_SIZE, 3*SQUARE_SIZE},3);
 	//sfRectangleShape *resultsBackground = createSquare((sfVector2f){resultPos.x-0.5*SQUARE_SIZE, resultPos.y-0.5*SQUARE_SIZE}, resultsBackgroundSize, dirtyBlue, sfBlack);
 
 	buttonRec buttons[5]; //0 - start game, 1 - help, 2 - exit, 3 - play again, 4 - back to menu
@@ -81,7 +81,7 @@ int main()
 						mode = 2;
 					}
 					else if(mousePos.x >= buttons[2].pos.x && mousePos.x <= buttons[2].pos.x + 4*SQUARE_SIZE && mousePos.y <= buttons[2].pos.y+1.5*SQUARE_SIZE && mousePos.y >= buttons[2].pos.y){
-						deleteAll(window, background, shapes, font, menu, buttons, bExit, gameText, helpBackground, images);
+						deleteAll(window, background, shapes, font, specialFont, menu, buttons, bExit, gameText, helpBackground, images);
 						printf("exiting...\n");
 						exit(0);
 					}
@@ -148,10 +148,12 @@ int main()
 		{
 			endBoard(window, background);
 			drawMenu(window, menu, buttons, font, 2);
-			sprintf(result, "Points: %d", punkty);
+			sprintf(result, "POINTS: %d", punkty);
 			sfText_setString(gameText[3], result);
+			sfText_setString(gameText[4], "NEW RECORD!");
 			sfRenderWindow_drawText(window, gameText[3], NULL);
 			sfRenderWindow_drawText(window, buttons[3].t, NULL);
+			if(newRecord == 1) sfRenderWindow_drawText(window, gameText[4], NULL);
 			if (event.type == sfEvtMouseButtonPressed)
 			{
 				if (sfMouse_isButtonPressed(sfMouseLeft))
@@ -183,12 +185,12 @@ int main()
 		}
 		if (sfKeyboard_isKeyPressed(sfKeyQ))
 			{
-				deleteAll(window, background, shapes, font, menu, buttons, bExit, gameText, helpBackground, images);
+				deleteAll(window, background, shapes, font, specialFont, menu, buttons, bExit, gameText, helpBackground, images);
 				exit(0);
 			}
 		sfRenderWindow_display(window);
 	}
 	// clear everything
-	deleteAll(window, background, shapes, font, menu, buttons, bExit, gameText, helpBackground, images);
+	deleteAll(window, background, shapes, font, specialFont, menu, buttons, bExit, gameText, helpBackground, images);
 	return 0;
 }
