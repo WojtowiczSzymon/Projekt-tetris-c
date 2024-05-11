@@ -57,12 +57,10 @@ sfCircleShape *createCircle(sfVector2f position, sfColor fillColor, sfColor outl
 	float radius = 10;
 	sfCircleShape *circle = sfCircleShape_create();
 	sfCircleShape_setPosition(circle, position);
-	printf("pos: %f %f\n", sfCircleShape_getPosition(circle).x, sfCircleShape_getPosition(circle).x);
 	sfCircleShape_setRadius(circle, radius);
 	sfCircleShape_setFillColor(circle, fillColor);
 	sfCircleShape_setOutlineThickness(circle, 1);
 	sfCircleShape_setOutlineColor(circle, outlineColor);
-	printf("circe\n");
 	return circle;
 }
 
@@ -72,16 +70,48 @@ void defineMenu(sfRectangleShape *menu[6][11])
 	{
 		for (int j = 0; j < 11; j++)
 		{
-			sfVector2f position = {
-				(i + 2) * SQUARE_SIZE,
-				(j + 2) * SQUARE_SIZE,
-			};
+			sfVector2f position = {(i + 2) * SQUARE_SIZE,(j + 2) * SQUARE_SIZE};
 			menu[i][j] = createSquare(position, (sfVector2f){SQUARE_SIZE, SQUARE_SIZE}, dirtyBlue, dirtyBlue);
 		}
 	}
 }
 
-void drawMenu(sfRenderWindow *window, sfRectangleShape *menu[6][11], buttonRec buttons[5], buttonCirc bExit[1], int type)
+sfText *createText(sfFont *font, sfColor color, sfColor outlineColor, int size, sfVector2f position, float thickness)
+{
+	sfText *txt = sfText_create();
+	sfText_setFont(txt, font);
+	sfText_setCharacterSize(txt, size);
+	sfText_setColor(txt, color);
+	sfText_setOutlineThickness(txt, thickness);
+	sfText_setOutlineColor(txt, outlineColor);
+	sfText_setPosition(txt, position);
+
+	return txt;
+}
+
+void defineHelp(sfText *gameText[4], sfRectangleShape *helpBackground[8][6], sfFont *font)
+{
+	for(int i = 0; i < 8; i++){
+		for(int j = 0; j < 6; j++){
+			sfVector2f position = {(i+1)* SQUARE_SIZE,(j + 4.5) * SQUARE_SIZE};
+			helpBackground[i][j] = createSquare(position, (sfVector2f){SQUARE_SIZE, SQUARE_SIZE}, dirtyBlue, dirtyBlue);
+		}
+	}
+	float thickness = 1;
+	sfVector2f position[] = {(sfVector2f){3* SQUARE_SIZE, 5.25 * SQUARE_SIZE}, (sfVector2f){3 * SQUARE_SIZE, 7 * SQUARE_SIZE}, (sfVector2f){2.5 * SQUARE_SIZE, 9 * SQUARE_SIZE}, (sfVector2f){3.5 * SQUARE_SIZE, 11 * SQUARE_SIZE}};
+	gameText[0] = createText(font, sfWhite, darkBlue, 20, position[0], thickness);
+	sfText_setString(gameText[0], "Use left and right arrow to move\na falling piece.");
+	gameText[1] = createText(font, sfWhite, darkBlue, 20, position[1], thickness);
+	// printf("%f\n", sfText_getOutlineThickness);
+	sfText_setString(gameText[1], "Click on R to rotate a falling\npiece.");
+	gameText[2] = createText(font, sfWhite, darkBlue, 20, position[2], thickness);
+	sfText_setString(gameText[2], "Click on Q to exit the game.");
+	gameText[3] = createText(font, sfWhite, darkBlue, 30, position[3], thickness);
+	sfText_setString(gameText[3], "Have fun! :)");
+
+}
+
+void drawMenu(sfRenderWindow *window, sfRectangleShape *menu[6][11], buttonRec buttons[5], sfFont *font, int type)
 {
 	for (int i = 0; i < 6; i++)
 	{
@@ -92,23 +122,29 @@ void drawMenu(sfRenderWindow *window, sfRectangleShape *menu[6][11], buttonRec b
 	}
 	switch (type)
 	{
-		case 1:
-			for (int i = 0; i < 3; i++)
-			{
-				sfRenderWindow_drawRectangleShape(window, buttons[i].b, NULL);
-				sfRenderWindow_drawText(window, buttons[i].t, NULL);
-			}
-			break;
-		case 2:
-		 	sfRenderWindow_drawCircleShape(window, bExit[0].c, NULL);
-		 	sfRenderWindow_drawText(window, bExit[0].t, NULL);
-		 	break;
+	case 1:
+		for (int i = 0; i < 3; i++)
+		{
+			sfRenderWindow_drawRectangleShape(window, buttons[i].b, NULL);
+			sfRenderWindow_drawText(window, buttons[i].t, NULL);
+		}
+		break;
 	}
-
 }
 
-void drawHelp(){
-	printf("help\n");
+void drawHelp(sfRenderWindow *window, sfRectangleShape *helpBackground[8][6], sfText *gameText[4], buttonCirc bExit[1])
+{
+	for(int i = 0; i < 8; i++){
+		for(int j = 0; j < 6; j++){
+			sfRenderWindow_drawRectangleShape(window, helpBackground[i][j], NULL);
+		}
+	}
+	sfRenderWindow_drawCircleShape(window, bExit[0].c, NULL);
+	sfRenderWindow_drawText(window, bExit[0].t, NULL);
+	for (int i = 0; i < 4; i++)
+	{
+		sfRenderWindow_drawText(window, gameText[i], NULL);
+	}
 }
 
 sfRectangleShape *createButtonRec(sfVector2f buttonPos)
@@ -119,33 +155,20 @@ sfRectangleShape *createButtonRec(sfVector2f buttonPos)
 	return b;
 }
 
-sfText *createText(sfFont *font, sfColor color, sfColor outlineColor, int size, sfVector2f position)
-{
-	sfText *txt = sfText_create();
-	sfText_setFont(txt, font);
-	sfText_setCharacterSize(txt, size);
-	sfText_setColor(txt, color);
-	sfText_setOutlineThickness(txt, 1);
-	sfText_setOutlineColor(txt, outlineColor);
-	sfText_setPosition(txt, position);
-
-	return txt;
-}
-
 void defineButtons(buttonRec buttons[5], buttonCirc bExit[1], sfFont *font)
 {
-	//printf("b\n");
-	sfVector2f position[] = {(sfVector2f){3 * SQUARE_SIZE, 3 * SQUARE_SIZE}, (sfVector2f){3 * SQUARE_SIZE, 6.75 * SQUARE_SIZE}, (sfVector2f){3 * SQUARE_SIZE, 10.5 * SQUARE_SIZE}, (sfVector2f){3 * SQUARE_SIZE, 12 * SQUARE_SIZE}, (sfVector2f){3 * SQUARE_SIZE, 12 * SQUARE_SIZE},(sfVector2f){2.2 * SQUARE_SIZE, 2.2 * SQUARE_SIZE}};
+	float thickness = 0.8;
+	sfVector2f position[] = {(sfVector2f){3 * SQUARE_SIZE, 3 * SQUARE_SIZE}, (sfVector2f){3 * SQUARE_SIZE, 6.75 * SQUARE_SIZE}, (sfVector2f){3 * SQUARE_SIZE, 10.5 * SQUARE_SIZE}, (sfVector2f){3 * SQUARE_SIZE, 12 * SQUARE_SIZE}, (sfVector2f){3 * SQUARE_SIZE, 12 * SQUARE_SIZE}, (sfVector2f){1.25 * SQUARE_SIZE, 4.8 * SQUARE_SIZE}};
 	int size = 40;
 	for (int i = 0; i < 5; i++)
 	{
 		buttons[i].b = createButtonRec(position[i]);
 		if (i == 2)
-			buttons[i].t = createText(font, sfWhite, sfBlack, size, (sfVector2f){position[i].x + 1.1 * SQUARE_SIZE, position[i].y + 0.25 * SQUARE_SIZE});
+			buttons[i].t = createText(font, sfWhite, sfBlack, size, (sfVector2f){position[i].x + 1.1 * SQUARE_SIZE, position[i].y + 0.25 * SQUARE_SIZE}, thickness);
 		else if (i == 3)
-			buttons[i].t = createText(font, sfWhite, sfBlack, size, (sfVector2f){position[i].x + 0.5 * SQUARE_SIZE, position[i].y + 0.25 * SQUARE_SIZE});
+			buttons[i].t = createText(font, sfWhite, sfBlack, size, (sfVector2f){position[i].x + 0.5 * SQUARE_SIZE, position[i].y + 0.25 * SQUARE_SIZE}, thickness);
 		else
-			buttons[i].t = createText(font, sfWhite, sfBlack, size, (sfVector2f){position[i].x + SQUARE_SIZE, position[i].y + 0.25 * SQUARE_SIZE});
+			buttons[i].t = createText(font, sfWhite, sfBlack, size, (sfVector2f){position[i].x + SQUARE_SIZE, position[i].y + 0.25 * SQUARE_SIZE}, thickness);
 		buttons[i].pos = (sfVector2i){position[i].x, position[i].y};
 	}
 	sfText_setString(buttons[0].t, "PLAY");
@@ -153,32 +176,30 @@ void defineButtons(buttonRec buttons[5], buttonCirc bExit[1], sfFont *font)
 	sfText_setString(buttons[2].t, "EXIT");
 	sfText_setString(buttons[3].t, "PLAY AGAIN");
 	bExit[0].c = createCircle(position[5], darkBlue, darkBlue);
-	bExit[0].t = createText(font, lightPurple, lightPurple, 10, (sfVector2f){position[5].x+8, position[5].y+3});
+	bExit[0].t = createText(font, lightPurple, lightPurple, 15, (sfVector2f){position[5].x + 6.5, position[5].y - 1}, 0);
 	sfText_setString(bExit[0].t, "x");
 	bExit[0].pos = (sfVector2i){position[5].x, position[5].y};
 }
 
-void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font, sfRectangleShape *resultBackground, sfRectangleShape *menu[6][11], buttonRec buttons[4], buttonCirc bExit[1])
+void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font, sfRectangleShape *resultBackground, sfRectangleShape *menu[6][11], buttonRec buttons[4], buttonCirc bExit[1], sfText *gameText[4], sfRectangleShape *helpBackground[8][6])
 {
 	for (int i = 0; i < 10; i++)
 	{
-		for (int j = 0; j < 15; j++)
-		{
-			sfRectangleShape_destroy(background[i][j]);
-		}
+		for (int j = 0; j < 15; j++) sfRectangleShape_destroy(background[i][j]);
 	}
 	for (int i = 0; i < 6; i++)
 	{
-		for (int j = 0; j < 11; j++)
-		{
-			sfRectangleShape_destroy(menu[i][j]);
-		}
+		for (int j = 0; j < 11; j++) sfRectangleShape_destroy(menu[i][j]);
 	}
 	for (int i = 0; i < 4; i++)
 	{
 		sfRectangleShape_destroy(shapes[i]);
 		sfRectangleShape_destroy(buttons[i].b);
 		sfText_destroy(buttons[i].t);
+	}
+	for (int i = 0; i < 4; i++) sfText_destroy(gameText[i]);
+	for(int i = 0; i < 8; i++){
+		for(int j = 0; j < 6; j++) sfRectangleShape_destroy(helpBackground[i][j]);
 	}
 	sfCircleShape_destroy(bExit[0].c);
 	sfText_destroy(bExit[0].t);

@@ -62,14 +62,16 @@ sfRectangleShape *createSquare(sfVector2f position, sfVector2f size, sfColor fil
 
 void defineMenu(sfRectangleShape *menu[6][11]);
 
-void drawMenu(sfRenderWindow *window, sfRectangleShape *menu[6][11], buttonRec buttons[5], buttonCirc bExit[1], int type);
+void defineHelp(sfText *helpText[4], sfRectangleShape *helpBackground[8][6], sfFont *font);
 
-void drawHelp();
+void drawMenu(sfRenderWindow *window, sfRectangleShape *menu[6][11], buttonRec buttons[5], sfFont *font, int type);
 
-sfText *createText(sfFont *font, sfColor color, sfColor outlineColor, int size, sfVector2f position);
+void drawHelp(sfRenderWindow *window, sfRectangleShape *helpBackground[8][6], sfText *gameText[4], buttonCirc bExit[1]);
+
+sfText *createText(sfFont *font, sfColor color, sfColor outlineColor, int size, sfVector2f position, float thickness);
 
 void defineButtons(buttonRec buttons[5], buttonCirc bExit[1], sfFont *font);
 
-void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font, sfRectangleShape *resultBackground, sfRectangleShape *menu[6][11], buttonRec buttons[5], buttonCirc bExit[1]);
+void deleteAll(sfRenderWindow *window, sfRectangleShape *background[10][15], sfRectangleShape *shapes[4], sfText *text_result, sfFont *font, sfRectangleShape *resultBackground, sfRectangleShape *menu[6][11], buttonRec buttons[5], buttonCirc bExit[1], sfText *helpText[4], sfRectangleShape *helpBackground[8][6]);
 
 #endif

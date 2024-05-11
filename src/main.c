@@ -18,13 +18,18 @@ int main()
 	char result[10];
 	char newGame[] = "Play Again";
 	startGame();
+	mode = 2;
 
 	// set window
 	sfRenderWindow *window = createWindow();
 
 	//start screen
 	sfRectangleShape *menu[6][11];
+	sfRectangleShape *helpBackground[8][6];
 	defineMenu(menu);
+	sfText *gameText[4];
+	sfFont *font = sfFont_createFromFile("Arial.ttf");
+	defineHelp(gameText, helpBackground, font);
 
 	//game
 	sfRectangleShape *background[10][15];
@@ -32,13 +37,11 @@ int main()
 	sfRectangleShape *shapes[4]; // tablica czterech kwadratow, na ktore skalda sie ksztalt
 	defineSprites(shapes);
 
-	sfFont *font = sfFont_createFromFile("Arial.ttf");
-
 	//end screen
 	int size_text_result = 50, size_new_game = 30;
 	sfVector2f resultPos = {2*SQUARE_SIZE, 5.5*SQUARE_SIZE};
 	sfVector2f resultsBackgroundSize = {7*SQUARE_SIZE, 2.5*SQUARE_SIZE};
-	sfText *text_result = createText(font, sfWhite, sfBlack, size_text_result, (sfVector2f){resultPos.x+1*SQUARE_SIZE, resultPos.y});
+	sfText *text_result = createText(font, sfWhite, sfBlack, size_text_result, (sfVector2f){resultPos.x+1*SQUARE_SIZE, resultPos.y},1);
 	sfRectangleShape *resultsBackground = createSquare((sfVector2f){resultPos.x-0.5*SQUARE_SIZE, resultPos.y-0.5*SQUARE_SIZE}, resultsBackgroundSize, dirtyBlue, sfBlack);
 
 	buttonRec buttons[5]; //0 - start game, 1 - help, 2 - exit, 3 - play again, 4 - back to menu
@@ -65,7 +68,7 @@ int main()
 		drawBoard(window, background);
 
 		if(mode == 0){
-			drawMenu(window, menu, buttons, bExit, 1);
+			drawMenu(window, menu, buttons, font, 1);
 			if (event.type == sfEvtMouseButtonPressed)
 			{
 				if (sfMouse_isButtonPressed(sfMouseLeft))
@@ -89,19 +92,19 @@ int main()
 						mode = 2;
 					}
 					else if(mousePos.x >= buttons[2].pos.x && mousePos.x <= buttons[2].pos.x + 4*SQUARE_SIZE && mousePos.y <= buttons[2].pos.y+1.5*SQUARE_SIZE && mousePos.y >= buttons[2].pos.y){
-						deleteAll(window, background, shapes, text_result, font, resultsBackground, menu, buttons, bExit);
+						deleteAll(window, background, shapes, text_result, font, resultsBackground, menu, buttons, bExit, gameText, helpBackground);
 						exit(0);
 					}
 				}
 			}
 		}
 		if(mode == 2){
-			drawMenu(window, menu, buttons, bExit, 2);
-			drawHelp();
+			drawHelp(window, helpBackground, gameText, bExit);
 			if (event.type == sfEvtMouseButtonPressed){
 				if (sfMouse_isButtonPressed(sfMouseLeft)){
 					sfVector2i mousePos = {event.mouseButton.x, event.mouseButton.y};
-					if (mousePos.x >= bExit[0].pos.x && mousePos.x <= bExit[0].pos.x + 10 && mousePos.y <= bExit[0].pos.y + 10 && mousePos.y >= bExit[0].pos.y){
+					//printf("mouse: %d %d\nhorizontal range %d %d\nvertical range: %d %d\n", mousePos.x, mousePos.y, bExit[0].pos.x, bExit[0].pos.x + 10, bExit[0].pos.y, bExit[0].pos.y+10);
+					if (mousePos.x >= bExit[0].pos.x && mousePos.x <= bExit[0].pos.x + 20 && mousePos.y <= bExit[0].pos.y + 20 && mousePos.y >= bExit[0].pos.y){
 						mode = 0;
 					}
 				}
@@ -186,13 +189,13 @@ int main()
 			}
 			if (sfKeyboard_isKeyPressed(sfKeyQ))
 			{
-				deleteAll(window, background, shapes, text_result, font, resultsBackground, menu, buttons, bExit);
+				deleteAll(window, background, shapes, text_result, font, resultsBackground, menu, buttons, bExit, gameText, helpBackground);
 				exit(0);
 			} // Q - quit
 		}
 		sfRenderWindow_display(window);
 	}
 	// clear everything
-	deleteAll(window, background, shapes, text_result, font, resultsBackground, menu, buttons, bExit);
+	deleteAll(window, background, shapes, text_result, font, resultsBackground, menu, buttons, bExit, gameText, helpBackground);
 	return 0;
 }
